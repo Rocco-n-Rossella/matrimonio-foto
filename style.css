@@ -1,0 +1,207 @@
+/* ════════════════════════════════════════
+   ROCCO & ROSSELLA — 24.06.2026
+   Shared Stylesheet
+   ════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Lato:wght@300;400;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold:       #C9A96E;
+  --gold-light: #E8D5B0;
+  --gold-dark:  #A07840;
+  --cream:      #FAF8F5;
+  --cream-2:    #F3EFE9;
+  --white:      #FFFFFF;
+  --dark:       #2C2C2C;
+  --dark-2:     #4a3f35;
+  --muted:      #7A7A7A;
+  --success:    #5A8A5A;
+  --error:      #A04040;
+  --border:     #E5DDD4;
+  --border-2:   #D4C8BB;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── NAV ── */
+nav {
+  width: 100%;
+  background: var(--dark);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(201,169,110,0.2);
+}
+.nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 56px;
+}
+.nav-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.nav-links {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+}
+.nav-links a {
+  display: block;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  border-radius: 50px;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--gold);
+  background: rgba(201,169,110,0.1);
+}
+
+/* ── HERO ── */
+.hero {
+  width: 100%;
+  background: linear-gradient(160deg, #2C2C2C 0%, #4a3f35 100%);
+  color: #fff;
+  text-align: center;
+  padding: 60px 24px 50px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(201,169,110,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-date {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.hero-names {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 1px;
+}
+.hero-names em { font-style: italic; color: var(--gold-light); }
+.hero-amp {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+  margin: 4px 0;
+}
+.hero-sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  margin-top: 18px;
+  line-height: 1.7;
+}
+.hero-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 20px auto;
+  opacity: 0.5;
+}
+
+/* ── PAGE CONTAINER ── */
+.page-body {
+  width: 100%;
+  max-width: 860px;
+  padding: 48px 24px 64px;
+  flex: 1;
+}
+
+/* ── SECTION TITLE ── */
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  font-weight: 600;
+  text-align: center;
+  color: var(--dark);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.section-sub {
+  font-size: 14px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.05);
+}
+
+/* ── FOOTER ── */
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 20px 24px;
+  font-size: 12px;
+  color: var(--border-2);
+  letter-spacing: 1px;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+}
+
+/* ── RESPONSIVE NAV ── */
+@media (max-width: 480px) {
+  .nav-brand { font-size: 1rem; }
+  .nav-links a { padding: 6px 10px; font-size: 11px; letter-spacing: 1px; }
+  .page-body { padding: 32px 16px 48px; }
+  .card { padding: 24px 18px; }
+}

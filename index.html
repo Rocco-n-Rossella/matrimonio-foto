@@ -3,519 +3,370 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Foto Matrimonio — Rocco & Rossella</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <title>Rocco & Rossella — 24 Giugno 2026</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ── INFO CARDS GRID ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
 
-    :root {
-      --gold: #C9A96E;
-      --gold-light: #E8D5B0;
-      --cream: #FAF8F5;
-      --dark: #2C2C2C;
-      --muted: #7A7A7A;
-      --success: #5A8A5A;
-      --error: #A04040;
-      --border: #E5DDD4;
-    }
-
-    body {
-      font-family: 'Lato', sans-serif;
-      background: var(--cream);
-      color: var(--dark);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      width: 100%;
-      background: linear-gradient(160deg, #2C2C2C 0%, #4a3f35 100%);
-      color: #fff;
-      text-align: center;
-      padding: 60px 24px 50px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 100%, rgba(201,169,110,0.18) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-date {
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      font-size: 13px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 18px;
-    }
-    .hero-names {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 8vw, 5rem);
-      font-weight: 400;
-      line-height: 1.1;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-    .hero-names em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
-    .hero-ampersand {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      color: var(--gold);
-      display: block;
-      line-height: 1;
-      margin: 4px 0;
-    }
-    .hero-sub {
-      font-size: 14px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.65);
-      margin-top: 18px;
-      letter-spacing: 0.5px;
-      line-height: 1.6;
-    }
-    .divider {
-      width: 60px;
-      height: 1px;
-      background: var(--gold);
-      margin: 20px auto;
-      opacity: 0.6;
-    }
-
-    /* ── MAIN CARD ── */
-    .card {
-      width: 100%;
-      max-width: 560px;
-      background: #fff;
+    .info-card {
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 40px 36px;
-      margin: 36px 24px 48px;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.06);
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
     }
-
-    .card-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: var(--dark);
-      text-align: center;
-      margin-bottom: 8px;
-    }
-    .card-subtitle {
-      font-size: 14px;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
-
-    /* ── FORM ── */
-    label {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 7px;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      font-family: 'Lato', sans-serif;
-      font-size: 15px;
-      color: var(--dark);
-      background: var(--cream);
-      transition: border-color 0.2s;
-      outline: none;
-      margin-bottom: 22px;
-    }
-    input[type="text"]:focus {
-      border-color: var(--gold);
-      background: #fff;
-    }
-
-    /* ── DROP ZONE ── */
-    .drop-zone {
-      border: 2px dashed var(--border);
-      border-radius: 14px;
-      padding: 36px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.25s, background 0.25s;
-      background: var(--cream);
+    .info-card-header {
+      background: linear-gradient(135deg, #2C2C2C, #4a3f35);
+      padding: 22px 24px 18px;
       position: relative;
-      margin-bottom: 22px;
     }
-    .drop-zone:hover, .drop-zone.drag-over {
-      border-color: var(--gold);
-      background: #fdf9f3;
-    }
-    .drop-zone input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-    }
-    .drop-icon {
-      font-size: 36px;
-      margin-bottom: 10px;
+    .info-card-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
       display: block;
     }
-    .drop-text {
+    .info-card-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .info-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .info-card-body {
+      padding: 20px 24px;
+    }
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
       font-size: 14px;
-      color: var(--muted);
       line-height: 1.5;
     }
-    .drop-text strong {
-      color: var(--gold);
-      font-weight: 700;
-    }
-
-    /* ── PREVIEW GRIGLIA ── */
-    #preview-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-      gap: 8px;
-      margin-bottom: 22px;
-    }
-    .preview-thumb {
-      aspect-ratio: 1;
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-      border: 1.5px solid var(--border);
-    }
-    .preview-thumb img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .preview-thumb .remove-btn {
-      position: absolute;
-      top: 3px; right: 3px;
-      background: rgba(0,0,0,0.55);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 20px; height: 20px;
-      font-size: 11px;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      line-height: 1;
-    }
-    .file-count {
-      font-size: 13px;
-      color: var(--gold);
-      font-weight: 700;
-      margin-bottom: 18px;
+    .info-row:last-of-type { border-bottom: none; }
+    .info-row-icon {
+      font-size: 16px;
+      margin-top: 1px;
+      flex-shrink: 0;
+      width: 20px;
       text-align: center;
-      display: none;
     }
-
-    /* ── PROGRESS ── */
-    .progress-wrap {
-      display: none;
-      margin-bottom: 18px;
-    }
-    .progress-label {
-      font-size: 13px;
+    .info-row-text strong {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
+      margin-bottom: 2px;
     }
-    .progress-bar-bg {
-      background: var(--border);
-      border-radius: 100px;
-      height: 6px;
-      overflow: hidden;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--gold), #e8c07a);
-      border-radius: 100px;
-      width: 0%;
-      transition: width 0.3s ease;
-    }
+    .info-row-text span { color: var(--dark); }
 
-    /* ── BUTTON ── */
-    .btn-upload {
+    /* ── MAP ── */
+    .map-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       width: 100%;
-      padding: 15px;
-      background: linear-gradient(135deg, #C9A96E, #b8904f);
+      margin-top: 16px;
+      padding: 11px 16px;
+      background: var(--gold);
       color: #fff;
       border: none;
       border-radius: 50px;
       font-family: 'Lato', sans-serif;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 700;
       letter-spacing: 1px;
-      cursor: pointer;
+      text-decoration: none;
       transition: opacity 0.2s, transform 0.15s;
+      cursor: pointer;
     }
-    .btn-upload:hover:not(:disabled) {
-      opacity: 0.9;
-      transform: translateY(-1px);
-    }
-    .btn-upload:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .map-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
-    /* ── MESSAGGI ── */
-    .msg {
-      display: none;
+    .map-embed {
+      width: 100%;
+      height: 200px;
       border-radius: 12px;
-      padding: 16px 20px;
-      font-size: 14px;
+      border: none;
+      margin-top: 16px;
+      display: block;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 0 0 48px;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 28px;
+      top: 16px;
+      bottom: 16px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+    .tl-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 16px 0;
+    }
+    .tl-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: 4px;
+      margin-left: 21px;
+      border: 3px solid var(--cream);
+      box-shadow: 0 0 0 1px var(--gold);
+      position: relative;
+      z-index: 1;
+    }
+    .tl-content { flex: 1; }
+    .tl-time {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 3px;
+    }
+    .tl-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 2px;
+    }
+    .tl-desc {
+      font-size: 13px;
+      color: var(--muted);
       line-height: 1.5;
-      margin-top: 18px;
-      text-align: center;
-    }
-    .msg-success {
-      background: #f0f7f0;
-      border: 1.5px solid #b3d4b3;
-      color: var(--success);
-    }
-    .msg-error {
-      background: #fdf0f0;
-      border: 1.5px solid #e0b3b3;
-      color: var(--error);
     }
 
-    /* ── FOOTER ── */
-    footer {
+    /* ── DRESSCODE ── */
+    .dresscode-card {
+      background: linear-gradient(135deg, #2C2C2C, #4a3f35);
+      border-radius: 20px;
+      padding: 36px;
       text-align: center;
-      padding: 0 24px 36px;
+      color: #fff;
+    }
+    .dresscode-card .section-label { color: var(--gold); }
+    .dresscode-card .section-title { color: #fff; }
+    .dresscode-swatches {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .swatch {
+      text-align: center;
       font-size: 12px;
-      color: var(--border);
-      letter-spacing: 0.5px;
+      color: rgba(255,255,255,0.6);
     }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 480px) {
-      .card { padding: 30px 22px; margin: 24px 16px 36px; }
+    .swatch-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin: 0 auto 6px;
+      border: 2px solid rgba(255,255,255,0.15);
+    }
+    .dresscode-note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">Rocco & Rossella</a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Il Giorno</a></li>
+        <li><a href="tableau.html">I Tavoli</a></li>
+        <li><a href="foto.html">📷 Foto</a></li>
+      </ul>
+    </div>
+  </nav>
+
   <div class="hero">
-    <p class="hero-date">24 Giugno 2026 &nbsp;·&nbsp; Foggia</p>
+    <p class="hero-date">24 Giugno 2026 &nbsp;·&nbsp; Barletta</p>
     <div class="hero-names">
       <em>Rocco</em>
-      <span class="hero-ampersand">&amp;</span>
+      <span class="hero-amp">&amp;</span>
       <em>Rossella</em>
     </div>
-    <div class="divider"></div>
-    <p class="hero-sub">Hai catturato un momento speciale?<br>Condividilo con noi — resterà con noi per sempre.</p>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Siamo felici di condividere con voi<br>il giorno più bello della nostra vita.</p>
   </div>
 
-  <div class="card">
-    <h1 class="card-title">Carica le tue foto</h1>
-    <p class="card-subtitle">Scansiona, scegli le foto dal telefono e caricale direttamente nella nostra galleria privata. Nessuna app, nessuna registrazione.</p>
+  <div class="page-body">
 
-    <label for="nome-input">Il tuo nome</label>
-    <input type="text" id="nome-input" placeholder="Es. Marco Rossi" autocomplete="name" />
+    <!-- PROGRAMMA -->
+    <p class="section-label">Il Programma</p>
+    <h2 class="section-title">Come si svolgerà la giornata</h2>
+    <p class="section-sub">Vi aspettiamo per celebrare insieme ogni momento.</p>
 
-    <label>Le tue foto</label>
-    <div class="drop-zone" id="drop-zone">
-      <input type="file" id="file-input" accept="image/*" multiple />
-      <span class="drop-icon">📷</span>
-      <p class="drop-text"><strong>Tocca qui per scegliere le foto</strong><br>oppure trascinale in questo riquadro</p>
+    <div class="timeline" style="margin-bottom: 48px;">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <p class="tl-time">ore 10:30</p>
+          <p class="tl-title">Cerimonia</p>
+          <p class="tl-desc">Santuario della Madonna dello Sterpeto · Barletta</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <p class="tl-time">Dopo la cerimonia</p>
+          <p class="tl-title">Ricevimento</p>
+          <p class="tl-desc">Villa Corte degli Aranci · Barletta</p>
+        </div>
+      </div>
     </div>
 
-    <div id="file-count" class="file-count"></div>
-    <div id="preview-grid"></div>
+    <!-- LUOGHI -->
+    <p class="section-label">I Luoghi</p>
+    <h2 class="section-title">Dove ci trovi</h2>
+    <p class="section-sub">Salva gli indirizzi sul tuo navigatore preferito.</p>
 
-    <div class="progress-wrap" id="progress-wrap">
-      <div class="progress-label">
-        <span id="progress-text">Caricamento in corso…</span>
-        <span id="progress-pct">0%</span>
+    <div class="info-grid">
+
+      <!-- CERIMONIA -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <span class="info-card-icon">⛪</span>
+          <p class="info-card-label">Cerimonia</p>
+          <p class="info-card-title">Santuario della Madonna dello Sterpeto</p>
+        </div>
+        <div class="info-card-body">
+          <div class="info-row">
+            <span class="info-row-icon">🕙</span>
+            <div class="info-row-text">
+              <strong>Orario</strong>
+              <span>Ore 10:30</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <span class="info-row-icon">📍</span>
+            <div class="info-row-text">
+              <strong>Indirizzo</strong>
+              <span>Via dello Sterpeto, 76121 Barletta BT</span>
+            </div>
+          </div>
+          <iframe
+            class="map-embed"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3005.8!2d16.2783!3d41.3197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1347eca19b9e1a3b%3A0x6e9f4f2e2d2e2e2e!2sSantuario+della+Madonna+dello+Sterpeto!5e0!3m2!1sit!2sit!4v1"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <a class="map-btn" href="https://maps.google.com/?q=Santuario+Madonna+dello+Sterpeto+Barletta" target="_blank" rel="noopener">
+            🗺️ &nbsp;Apri in Google Maps
+          </a>
+        </div>
       </div>
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progress-fill"></div>
+
+      <!-- RICEVIMENTO -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <span class="info-card-icon">🌿</span>
+          <p class="info-card-label">Ricevimento</p>
+          <p class="info-card-title">Villa Corte degli Aranci</p>
+        </div>
+        <div class="info-card-body">
+          <div class="info-row">
+            <span class="info-row-icon">🕐</span>
+            <div class="info-row-text">
+              <strong>Orario</strong>
+              <span>Dopo la cerimonia</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <span class="info-row-icon">📍</span>
+            <div class="info-row-text">
+              <strong>Indirizzo</strong>
+              <span>Barletta, BT</span>
+            </div>
+          </div>
+          <iframe
+            class="map-embed"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3005.8!2d16.2900!3d41.3150!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zVmlsbGEgQ29ydGUgZGVnbGkgQXJhbmNp!5e0!3m2!1sit!2sit!4v1"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <a class="map-btn" href="https://maps.google.com/?q=Villa+Corte+degli+Aranci+Barletta" target="_blank" rel="noopener">
+            🗺️ &nbsp;Apri in Google Maps
+          </a>
+        </div>
       </div>
+
     </div>
 
-    <button class="btn-upload" id="btn-upload" disabled>
-      ✦ &nbsp;Carica le foto
-    </button>
+    <!-- DRESS CODE -->
+    <div class="dresscode-card">
+      <p class="section-label">Dress Code</p>
+      <h2 class="section-title" style="color:#fff; margin-bottom:6px;">Elegante</h2>
+      <p style="font-size:14px; color:rgba(255,255,255,0.55); margin-bottom:20px;">Sentitevi liberi di vestirvi come più vi rappresenta, mantenendo un tocco di eleganza per l'occasione.</p>
+      <div class="dresscode-swatches">
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#2C2C2C;"></div>
+          Nero / Antracite
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#C9A96E;"></div>
+          Oro / Champagne
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#8B9E7A;"></div>
+          Verde salvia
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#C4A882;"></div>
+          Beige / Nude
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#7A8FA6;"></div>
+          Azzurro polvere
+        </div>
+      </div>
+      <p class="dresscode-note">Vi chiediamo gentilmente di evitare il bianco e i toni molto chiari.<br>Grazie per la comprensione 💙</p>
+    </div>
 
-    <div class="msg msg-success" id="msg-success"></div>
-    <div class="msg msg-error" id="msg-error"></div>
   </div>
 
-  <footer>Rocco &amp; Rossella · 24.06.2026</footer>
-
-  <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwOmO-SYxM8b9c8LaH-erVfcw5jHc0ITyMw4MW-PLX8QQqs0NHAILN7wSJOnnJL4xmOew/exec';
-    const MAX_SIZE_MB = 15;
-    const MAX_FILES = 20;
-
-    const fileInput   = document.getElementById('file-input');
-    const dropZone    = document.getElementById('drop-zone');
-    const previewGrid = document.getElementById('preview-grid');
-    const fileCount   = document.getElementById('file-count');
-    const btnUpload   = document.getElementById('btn-upload');
-    const progressWrap= document.getElementById('progress-wrap');
-    const progressFill= document.getElementById('progress-fill');
-    const progressText= document.getElementById('progress-text');
-    const progressPct = document.getElementById('progress-pct');
-    const msgSuccess  = document.getElementById('msg-success');
-    const msgError    = document.getElementById('msg-error');
-    const nomeInput   = document.getElementById('nome-input');
-
-    let selectedFiles = [];
-
-    // Drag & drop visual feedback
-    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-    dropZone.addEventListener('drop', e => {
-      e.preventDefault();
-      dropZone.classList.remove('drag-over');
-      addFiles([...e.dataTransfer.files]);
-    });
-
-    fileInput.addEventListener('change', () => {
-      addFiles([...fileInput.files]);
-      fileInput.value = '';
-    });
-
-    function addFiles(newFiles) {
-      const images = newFiles.filter(f => f.type.startsWith('image/'));
-      const tooBig = images.filter(f => f.size > MAX_SIZE_MB * 1024 * 1024);
-      if (tooBig.length) {
-        showError(`Alcune foto superano i ${MAX_SIZE_MB} MB e non sono state aggiunte.`);
-      }
-      const valid = images.filter(f => f.size <= MAX_SIZE_MB * 1024 * 1024);
-      selectedFiles = [...selectedFiles, ...valid].slice(0, MAX_FILES);
-      renderPreviews();
-    }
-
-    function renderPreviews() {
-      previewGrid.innerHTML = '';
-      selectedFiles.forEach((file, idx) => {
-        const url = URL.createObjectURL(file);
-        const thumb = document.createElement('div');
-        thumb.className = 'preview-thumb';
-        thumb.innerHTML = `<img src="${url}" alt="anteprima" /><button class="remove-btn" data-idx="${idx}" title="Rimuovi">✕</button>`;
-        previewGrid.appendChild(thumb);
-      });
-      previewGrid.querySelectorAll('.remove-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          selectedFiles.splice(+btn.dataset.idx, 1);
-          renderPreviews();
-        });
-      });
-      if (selectedFiles.length > 0) {
-        fileCount.style.display = 'block';
-        fileCount.textContent = `${selectedFiles.length} foto selezionat${selectedFiles.length === 1 ? 'a' : 'e'}`;
-      } else {
-        fileCount.style.display = 'none';
-      }
-      btnUpload.disabled = selectedFiles.length === 0;
-      hideMessages();
-    }
-
-    function hideMessages() {
-      msgSuccess.style.display = 'none';
-      msgError.style.display = 'none';
-    }
-    function showError(msg) {
-      msgError.textContent = msg;
-      msgError.style.display = 'block';
-      msgSuccess.style.display = 'none';
-    }
-
-    function toBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(',')[1]);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    btnUpload.addEventListener('click', async () => {
-      if (selectedFiles.length === 0) return;
-      const nome = nomeInput.value.trim() || 'Ospite';
-
-      btnUpload.disabled = true;
-      progressWrap.style.display = 'block';
-      hideMessages();
-
-      let uploaded = 0;
-      let errors = 0;
-
-      for (let i = 0; i < selectedFiles.length; i++) {
-        const file = selectedFiles[i];
-        const pct = Math.round((i / selectedFiles.length) * 100);
-        progressFill.style.width = pct + '%';
-        progressPct.textContent = pct + '%';
-        progressText.textContent = `Caricamento foto ${i + 1} di ${selectedFiles.length}…`;
-
-        try {
-          const base64 = await toBase64(file);
-          const payload = {
-            nome,
-            file: base64,
-            fileName: file.name,
-            mimeType: file.type
-          };
-          const res = await fetch(SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-          });
-          const json = await res.json();
-          if (json.success) { uploaded++; } else { errors++; }
-        } catch (e) {
-          errors++;
-        }
-      }
-
-      progressFill.style.width = '100%';
-      progressPct.textContent = '100%';
-      progressWrap.style.display = 'none';
-
-      if (uploaded > 0 && errors === 0) {
-        msgSuccess.innerHTML = `
-          <strong>Grazie mille, ${nome}! 💙</strong><br>
-          ${uploaded} foto caricate con successo nella nostra galleria.
-          Le ritroverai nel ricordo del nostro giorno più bello.
-        `;
-        msgSuccess.style.display = 'block';
-        selectedFiles = [];
-        renderPreviews();
-      } else if (uploaded > 0 && errors > 0) {
-        msgSuccess.innerHTML = `
-          <strong>${uploaded} foto caricate</strong> — ${errors} non riuscite. Riprova per le rimanenti.
-        `;
-        msgSuccess.style.display = 'block';
-      } else {
-        showError('Si è verificato un errore durante il caricamento. Riprova tra qualche istante.');
-      }
-
-      btnUpload.disabled = selectedFiles.length === 0;
-    });
-  </script>
+  <footer>Rocco &amp; Rossella &nbsp;·&nbsp; 24 Giugno 2026 &nbsp;·&nbsp; Barletta</footer>
 
 </body>
 </html>
