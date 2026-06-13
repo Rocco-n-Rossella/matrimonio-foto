@@ -38,8 +38,6 @@
       margin-bottom: 24px;
     }
     input[type="text"]:focus { border-color: var(--gold); background: var(--white); }
-
-    /* La label wrappa tutto — è lei il vero target del tap */
     .drop-label {
       display: block;
       border: 2px dashed var(--border);
@@ -52,18 +50,12 @@
       margin-bottom: 20px;
       -webkit-tap-highlight-color: transparent;
     }
-    .drop-label:hover, .drop-label.drag-over {
-      border-color: var(--gold);
-      background: #fdf9f3;
-    }
-    .drop-label input[type="file"] {
-      display: none;
-    }
-    .drop-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+    .drop-label:hover { border-color: var(--gold); background: #fdf9f3; }
+    .drop-label input[type="file"] { display: none; }
+    .drop-icon { font-size: 40px; margin-bottom: 12px; display: block; pointer-events: none; }
     .drop-text { font-size: 14px; color: var(--muted); line-height: 1.6; pointer-events: none; }
     .drop-text strong { color: var(--gold); font-weight: 700; }
     .drop-hint { font-size: 12px; color: var(--border-2); margin-top: 6px; pointer-events: none; }
-
     #preview-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
@@ -99,7 +91,7 @@
     .progress-bar-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--gold), #e8c07a);
-      border-radius: 100px; width: 0%; transition: width 0.3s ease;
+      border-radius: 100px; width: 0%; transition: width 0.4s ease;
     }
     .btn-upload {
       width: 100%; padding: 15px;
@@ -202,7 +194,6 @@
 
     let selectedFiles = [];
 
-    // Drag & drop sul label
     dropLabel.addEventListener('dragover',  e => { e.preventDefault(); dropLabel.classList.add('drag-over'); });
     dropLabel.addEventListener('dragleave', () => dropLabel.classList.remove('drag-over'));
     dropLabel.addEventListener('drop', e => {
@@ -259,18 +250,24 @@
       });
     }
 
-    // JSONP: bypassa CORS su tutti i dispositivi
-    function uploadOne(payload) {
-      return new Promise((resolve) => {
-        const cbName = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-        const timer = setTimeout(() => { delete window[cbName]; resolve(false); }, 45000);
-        window[cbName] = (data) => { clearTimeout(timer); delete window[cbName]; resolve(!!(data && data.success)); };
-        const params = new URLSearchParams({ nome: payload.nome, file: payload.file, fileName: payload.fileName, mimeType: payload.mimeType, callback: cbName });
-        const s = document.createElement('script');
-        s.onerror = () => { clearTimeout(timer); delete window[cbName]; resolve(false); };
-        s.src = SCRIPT_URL + '?' + params.toString();
-        document.head.appendChild(s);
+    function setProgress(i, total) {
+      const pct = Math.round((i / total) * 100);
+      progressFill.style.width = pct + '%';
+      progressPct.textContent  = pct + '%';
+      progressText.textContent = i < total
+        ? `Caricamento foto ${i + 1} di ${total}…`
+        : 'Completato!';
+    }
+
+    async function uploadOne(payload) {
+      const res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload)
       });
+      const json = await res.json();
+      return json.success === true;
     }
 
     btnUpload.addEventListener('click', async () => {
@@ -284,19 +281,23 @@
       let uploaded = 0, errors = 0;
 
       for (let i = 0; i < total; i++) {
-        progressFill.style.width = Math.round((i / total) * 100) + '%';
-        progressPct.textContent  = Math.round((i / total) * 100) + '%';
-        progressText.textContent = `Caricamento foto ${i + 1} di ${total}…`;
+        setProgress(i, total);
         try {
           const base64 = await toBase64(selectedFiles[i]);
-          const ok = await uploadOne({ nome, file: base64, fileName: selectedFiles[i].name, mimeType: selectedFiles[i].type });
+          const ok = await uploadOne({
+            nome,
+            file:     base64,
+            fileName: selectedFiles[i].name,
+            mimeType: selectedFiles[i].type
+          });
           ok ? uploaded++ : errors++;
-        } catch { errors++; }
+        } catch(err) {
+          errors++;
+        }
       }
 
-      progressFill.style.width = '100%';
-      progressPct.textContent  = '100%';
-      progressWrap.style.display = 'none';
+      setProgress(total, total);
+      setTimeout(() => { progressWrap.style.display = 'none'; }, 600);
 
       if (uploaded > 0 && errors === 0) {
         msgSuccess.innerHTML = `<strong>Grazie mille, ${nome}! 💙</strong><br>${uploaded} foto caricate con successo nella nostra galleria privata.`;
@@ -307,7 +308,7 @@
         msgSuccess.innerHTML = `<strong>${uploaded} foto caricate</strong> — ${errors} non riuscite. Riprova per le rimanenti.`;
         msgSuccess.style.display = 'block';
       } else {
-        showError('Errore durante il caricamento. Controlla la connessione e riprova.');
+        showError('Errore di connessione. Assicurati di avere internet e riprova.');
         btnUpload.disabled = false;
       }
     });

@@ -6,156 +6,58 @@
   <title>I Tavoli — Rocco & Rossella</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── SEARCH ── */
-    .search-wrap {
-      position: relative;
-      margin-bottom: 32px;
-    }
-    .search-icon {
-      position: absolute;
-      left: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 18px;
-      pointer-events: none;
-    }
+    .search-wrap { position: relative; margin-bottom: 32px; }
+    .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; }
     #search-input {
-      width: 100%;
-      padding: 15px 18px 15px 50px;
-      border: 2px solid var(--border);
-      border-radius: 50px;
-      font-family: 'Lato', sans-serif;
-      font-size: 16px;
-      color: var(--dark);
-      background: var(--white);
-      outline: none;
+      width: 100%; padding: 15px 18px 15px 50px;
+      border: 2px solid var(--border); border-radius: 50px;
+      font-family: 'Lato', sans-serif; font-size: 16px; color: var(--dark);
+      background: var(--white); outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    #search-input:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 4px rgba(201,169,110,0.12);
-    }
+    #search-input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(201,169,110,0.12); }
     #search-input::placeholder { color: var(--muted); }
 
-    /* ── RESULT HIGHLIGHT ── */
-    .search-result-banner {
-      display: none;
-      background: linear-gradient(135deg, #2C2C2C, #4a3f35);
-      border-radius: 16px;
-      padding: 20px 24px;
-      margin-bottom: 28px;
-      text-align: center;
-      color: #fff;
+    .result-banner {
+      display: none; background: linear-gradient(135deg, #2C2C2C, #4a3f35);
+      border-radius: 16px; padding: 20px 24px; margin-bottom: 28px; text-align: center;
     }
-    .search-result-banner.show { display: block; }
-    .result-name {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-    .result-table-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: #fff;
-      line-height: 1.1;
-    }
-    .result-table-name em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
-    .result-companions {
-      font-size: 13px;
-      color: rgba(255,255,255,0.55);
-      margin-top: 6px;
-    }
+    .result-banner.show { display: block; }
+    .result-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .result-table { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: #fff; line-height: 1.1; }
+    .result-table em { font-style: italic; color: var(--gold-light); }
+    .result-companions { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 6px; }
 
-    /* ── TABLES GRID ── */
-    .tables-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-    }
+    #no-result { display: none; text-align: center; padding: 40px 20px; color: var(--muted); font-size: 15px; }
+
+    .tables-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+
     .table-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      overflow: hidden;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 18px; overflow: hidden;
       transition: box-shadow 0.2s, transform 0.2s;
     }
-    .table-card:hover {
-      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-      transform: translateY(-2px);
-    }
-    .table-card.highlight {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(201,169,110,0.2), 0 8px 32px rgba(0,0,0,0.08);
-    }
-    .table-card-header {
-      background: linear-gradient(135deg, #2C2C2C, #4a3f35);
-      padding: 16px 20px 14px;
-    }
-    .table-card.highlight .table-card-header {
-      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    }
-    .table-number {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 3px;
-    }
-    .table-card.highlight .table-number { color: rgba(255,255,255,0.7); }
-    .table-constellation {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #fff;
-      font-style: italic;
-    }
-    .table-count {
-      font-size: 11px;
-      color: rgba(255,255,255,0.5);
-      margin-top: 2px;
-    }
-    .table-card-body { padding: 14px 20px; }
+    .table-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .table-card.highlight { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,169,110,0.2); }
+
+    .table-header { background: linear-gradient(135deg, #2C2C2C, #4a3f35); padding: 16px 20px 14px; }
+    .table-card.highlight .table-header { background: linear-gradient(135deg, var(--gold-dark), var(--gold)); }
+    .table-number { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
+    .table-card.highlight .table-number { color: rgba(255,255,255,0.75); }
+    .table-constellation { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: #fff; font-style: italic; }
+    .table-count { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+    .table-body { padding: 14px 20px; }
     .guest-list { list-style: none; }
     .guest-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 0;
-      font-size: 14px;
-      color: var(--dark);
-      border-bottom: 1px solid var(--border);
-      line-height: 1.3;
+      display: flex; align-items: center; gap: 8px;
+      padding: 5px 0; font-size: 14px; color: var(--dark);
+      border-bottom: 1px solid var(--border); line-height: 1.3;
     }
     .guest-item:last-child { border-bottom: none; }
-    .guest-item.highlighted {
-      font-weight: 700;
-      color: var(--gold-dark);
-    }
-    .guest-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--border);
-      flex-shrink: 0;
-    }
-    .guest-item.highlighted .guest-dot { background: var(--gold); }
-
-    /* ── NO RESULT ── */
-    #no-result {
-      display: none;
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--muted);
-      font-size: 15px;
-    }
+    .guest-item.me { font-weight: 700; color: var(--gold-dark); }
+    .guest-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+    .guest-item.me .guest-dot { background: var(--gold); }
   </style>
 </head>
 <body>
@@ -173,298 +75,79 @@
 
   <div class="hero" style="padding: 44px 24px 38px;">
     <p class="hero-date">Tableau Mariage</p>
-    <div class="hero-names" style="font-size: clamp(2rem, 6vw, 3.5rem);">
-      <em>I Tavoli</em>
-    </div>
+    <div class="hero-names" style="font-size: clamp(2rem, 6vw, 3.5rem);"><em>I Tavoli</em></div>
     <div class="hero-divider"></div>
     <p class="hero-sub">Cerca il tuo nome per scoprire il tuo posto.</p>
   </div>
 
   <div class="page-body">
-
-    <!-- RICERCA -->
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
       <input type="text" id="search-input" placeholder="Scrivi il tuo nome…" autocomplete="off" />
     </div>
 
-    <!-- RISULTATO RICERCA -->
-    <div class="search-result-banner" id="result-banner">
-      <p class="result-name" id="result-guest-name"></p>
-      <p class="result-table-name">Tavolo <em id="result-table-constellation"></em></p>
+    <div class="result-banner" id="result-banner">
+      <p class="result-label" id="result-name"></p>
+      <p class="result-table">Tavolo <em id="result-constellation"></em></p>
       <p class="result-companions" id="result-companions"></p>
     </div>
 
     <div id="no-result">Nessun ospite trovato. Controlla di aver scritto correttamente il nome.</div>
-
-    <!-- GRIGLIA TAVOLI -->
     <div class="tables-grid" id="tables-grid"></div>
-
   </div>
 
   <footer>Rocco &amp; Rossella &nbsp;·&nbsp; 24 Giugno 2026 &nbsp;·&nbsp; Barletta</footer>
 
   <script>
     const TABLES = [
-      {
-        id: "sposi",
-        number: "Tavolo Sposi",
-        constellation: "Corona Boreale",
-        guests: [
-          { name: "Rocco" },
-          { name: "Rossella" }
-        ]
-      },
-      {
-        id: "genitori1",
-        number: "Tavolo Genitori 1",
-        constellation: "Orsa Maggiore",
-        guests: [
-          { name: "Giovanni Cristallo" },
-          { name: "Laura Cuccorese" },
-          { name: "Severina Ciampolillo" },
-          { name: "Vincenzo Scotellaro" },
-          { name: "Mariagrazia Cristallo" }
-        ]
-      },
-      {
-        id: "t2",
-        number: "Tavolo 2",
-        constellation: "Cane Maggiore",
-        guests: [
-          { name: "Nadia Scotellaro" },
-          { name: "Angelo Tortorella" },
-          { name: "Nicola Ciampolillo" },
-          { name: "Angela Ieva" },
-          { name: "Giuseppe Ciampolillo" },
-          { name: "Gerardo Ciampolillo" },
-          { name: "Rosa Lo Russo" },
-          { name: "Gerardo Ciampolillo (Nonno)" }
-        ]
-      },
-      {
-        id: "t3",
-        number: "Tavolo 3",
-        constellation: "Cigno",
-        guests: [
-          { name: "Rosa Cuccorese" },
-          { name: "Michele Daloia" },
-          { name: "Anna Cuccorese" },
-          { name: "Giuseppe Delcuratolo" },
-          { name: "Nicola Daloia" },
-          { name: "Sandra Sisto" },
-          { name: "Angela Daloia" },
-          { name: "Francesco Dibenedetto" },
-          { name: "Beatrice Dibenedetto" },
-          { name: "Luana Cassanelli" }
-        ]
-      },
-      {
-        id: "t6",
-        number: "Tavolo Testimoni 6",
-        constellation: "Perseo",
-        guests: [
-          { name: "Francesco Scotellaro" },
-          { name: "Donatella Quaglia" },
-          { name: "Savino Cristallo" },
-          { name: "Nicola Lalario" },
-          { name: "Yuri Vigiano" },
-          { name: "Federica Traina" },
-          { name: "Francesco Di Carlo" },
-          { name: "Roberta Dell'Anno" },
-          { name: "Gianluca Villani" },
-          { name: "Umberto Martino" },
-          { name: "Sara Carapellese" }
-        ]
-      },
-      {
-        id: "t7",
-        number: "Tavolo 7",
-        constellation: "Fenice",
-        guests: [
-          { name: "Francesco Palmieri" },
-          { name: "Paola Lavermicocca" },
-          { name: "Giacomo Tortorella" },
-          { name: "Pierpaolo Tortorella" },
-          { name: "Mattia Scotellaro" },
-          { name: "Sara Guida" },
-          { name: "Pasqualina Quaglia" },
-          { name: "Generoso Inneo" },
-          { name: "Mariapia Marrese" },
-          { name: "Antonio Marrese" }
-        ]
-      },
-      {
-        id: "t8",
-        number: "Tavolo 8",
-        constellation: "Andromeda",
-        guests: [
-          { name: "Rossella Cristallo" },
-          { name: "Lucia Cristallo" },
-          { name: "Alessandro Stanca" },
-          { name: "Michela Cristallo" },
-          { name: "Ignazio Delvecchio" },
-          { name: "Nicolò Tedesco" },
-          { name: "Francesca Tedesco" }
-        ]
-      },
-      {
-        id: "t9",
-        number: "Tavolo 9",
-        constellation: "Cefeo",
-        guests: [
-          { name: "Stefano Rizzi" },
-          { name: "Anna Romano" },
-          { name: "Mariagrazia Sarcina" },
-          { name: "Leonardo Chiariello" },
-          { name: "Aurora Marcante" },
-          { name: "Grazia Caporusso" },
-          { name: "Michele Cafagna" }
-        ]
-      },
-      {
-        id: "t11",
-        number: "Tavolo 11",
-        constellation: "Lira",
-        guests: [
-          { name: "Antonietta Di Leo" },
-          { name: "Gerardo Marrese" },
-          { name: "Giovanni Spagone" },
-          { name: "Giovanna Ramella" },
-          { name: "Domenico Letizia" },
-          { name: "Sonia Benvenga" },
-          { name: "Carmine Quaglia" },
-          { name: "Maria Furcolo" }
-        ]
-      },
-      {
-        id: "t12",
-        number: "Tavolo 12",
-        constellation: "Altare",
-        guests: [
-          { name: "Rosa Caporusso" },
-          { name: "Savino Cristallo" },
-          { name: "Nunzio Cristallo" },
-          { name: "Maria Delvecchio" },
-          { name: "Francesca Cristallo" },
-          { name: "Luigi Tedesco" }
-        ]
-      },
-      {
-        id: "t14",
-        number: "Tavolo 14",
-        constellation: "Aquila",
-        guests: [
-          { name: "Desiree Baiocco" },
-          { name: "Francesco Perboni" },
-          { name: "Chiara Perboni" },
-          { name: "Caterina Perboni" },
-          { name: "Margherita Perboni" },
-          { name: "Padre Alberto" },
-          { name: "Don Domenico" },
-          { name: "Maria Delvecchio" },
-          { name: "Giuseppe Adesso" }
-        ]
-      },
-      {
-        id: "t18",
-        number: "Tavolo 18",
-        constellation: "Pegaso",
-        guests: [
-          { name: "Stefano Santangelo" },
-          { name: "Fulvia Bozza" },
-          { name: "Adelmo Infante" },
-          { name: "Marta Vitulli" },
-          { name: "Primo Panunzio" },
-          { name: "Gennaro Favatà" },
-          { name: "Antonio Ciavarella" },
-          { name: "Michele Ognissanti" },
-          { name: "Ciro Fierro" },
-          { name: "Sabrina Bruno" }
-        ]
-      },
-      {
-        id: "t19",
-        number: "Tavolo 19",
-        constellation: "Delfino",
-        guests: [
-          { name: "Giuseppe Lorusso" },
-          { name: "Francesca Gervasi" },
-          { name: "Vito Antonicelli" },
-          { name: "Mariarita Desantis" },
-          { name: "Monica Borrelli" },
-          { name: "Beatrice Simion" },
-          { name: "Kevin Santiago" },
-          { name: "Michele Riondino" },
-          { name: "Stefano Albarracin" }
-        ]
-      },
-      {
-        id: "t20",
-        number: "Tavolo 20",
-        constellation: "Colomba",
-        guests: [
-          { name: "Cristina De Nicolò" },
-          { name: "David Espi" },
-          { name: "Anna Perla Baldassarre" },
-          { name: "Alessandro Papavassiliou" },
-          { name: "Francesco Carapellese" },
-          { name: "Sonia Albonico" },
-          { name: "Anna Tolmatova" },
-          { name: "Roberto Kevin Riccio" },
-          { name: "Antonio D'Errico" },
-          { name: "Federica Mineccia" },
-          { name: "Stella D'Errico" }
-        ]
-      }
+      { id:"sposi",    number:"Tavolo Sposi",       constellation:"Corona Boreale", guests:["Rocco","Rossella"] },
+      { id:"gen1",     number:"Tavolo Genitori 1",   constellation:"Orsa Maggiore",  guests:["Giovanni Cristallo","Laura Cuccorese","Severina Ciampolillo","Vincenzo Scotellaro","Mariagrazia Cristallo"] },
+      { id:"t2",       number:"Tavolo 2",            constellation:"Cane Maggiore",  guests:["Nadia Scotellaro","Angelo Tortorella","Nicola Ciampolillo","Angela Ieva","Giuseppe Ciampolillo","Gerardo Ciampolillo","Rosa Lo Russo","Gerardo Ciampolillo (Nonno)"] },
+      { id:"t3",       number:"Tavolo 3",            constellation:"Cigno",          guests:["Rosa Cuccorese","Michele Daloia","Anna Cuccorese","Giuseppe Delcuratolo","Nicola Daloia","Sandra Sisto","Angela Daloia","Francesco Dibenedetto","Beatrice Dibenedetto","Luana Cassanelli"] },
+      { id:"t6",       number:"Tavolo Testimoni 6",  constellation:"Perseo",         guests:["Francesco Scotellaro","Donatella Quaglia","Savino Cristallo","Nicola Lalario","Yuri Vigiano","Federica Traina","Francesco Di Carlo","Roberta Dell'Anno","Gianluca Villani","Umberto Martino","Sara Carapellese"] },
+      { id:"t7",       number:"Tavolo 7",            constellation:"Fenice",         guests:["Francesco Palmieri","Paola Lavermicocca","Giacomo Tortorella","Pierpaolo Tortorella","Mattia Scotellaro","Sara Guida","Pasqualina Quaglia","Generoso Inneo","Mariapia Marrese","Antonio Marrese"] },
+      { id:"t8",       number:"Tavolo 8",            constellation:"Andromeda",      guests:["Rossella Cristallo","Lucia Cristallo","Alessandro Stanca","Michela Cristallo","Ignazio Delvecchio","Nicolò Tedesco","Francesca Tedesco"] },
+      { id:"t9",       number:"Tavolo 9",            constellation:"Cefeo",          guests:["Stefano Rizzi","Anna Romano","Mariagrazia Sarcina","Leonardo Chiariello","Aurora Marcante","Grazia Caporusso","Michele Cafagna"] },
+      { id:"t11",      number:"Tavolo 11",           constellation:"Lira",           guests:["Antonietta Di Leo","Gerardo Marrese","Giovanni Spagone","Giovanna Ramella","Domenico Letizia","Sonia Benvenga","Carmine Quaglia","Maria Furcolo"] },
+      { id:"t12",      number:"Tavolo 12",           constellation:"Altare",         guests:["Rosa Caporusso","Savino Cristallo","Nunzio Cristallo","Maria Delvecchio","Francesca Cristallo","Luigi Tedesco"] },
+      { id:"t14",      number:"Tavolo 14",           constellation:"Aquila",         guests:["Desiree Baiocco","Francesco Perboni","Chiara Perboni","Caterina Perboni","Margherita Perboni","Padre Alberto","Don Domenico","Maria Delvecchio","Giuseppe Adesso"] },
+      { id:"t18",      number:"Tavolo 18",           constellation:"Pegaso",         guests:["Stefano Santangelo","Fulvia Bozza","Adelmo Infante","Marta Vitulli","Primo Panunzio","Gennaro Favatà","Antonio Ciavarella","Michele Ognissanti","Ciro Fierro","Sabrina Bruno"] },
+      { id:"t19",      number:"Tavolo 19",           constellation:"Delfino",        guests:["Giuseppe Lorusso","Francesca Gervasi","Vito Antonicelli","Mariarita Desantis","Monica Borrelli","Beatrice Simion","Kevin Santiago","Michele Riondino","Stefano Albarracin"] },
+      { id:"t20",      number:"Tavolo 20",           constellation:"Colomba",        guests:["Cristina De Nicolò","David Espi","Anna Perla Baldassarre","Alessandro Papavassiliou","Francesco Carapellese","Sonia Albonico","Anna Tolmatova","Roberto Kevin Riccio","Antonio D'Errico","Federica Mineccia","Stella D'Errico"] }
     ];
-const grid = document.getElementById('tables-grid');
-    const searchInput = document.getElementById('search-input');
-    const resultBanner = document.getElementById('result-banner');
-    const resultGuestName = document.getElementById('result-guest-name');
-    const resultTableConst = document.getElementById('result-table-constellation');
-    const resultCompanions = document.getElementById('result-companions');
-    const noResult = document.getElementById('no-result');
 
-    function normalize(str) {
-      return str.toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        .replace(/[''']/g, "'")
-        .trim();
-    }
-">${info.label}</span>`;
-      }).join('');
+    const grid          = document.getElementById('tables-grid');
+    const searchInput   = document.getElementById('search-input');
+    const resultBanner  = document.getElementById('result-banner');
+    const resultName    = document.getElementById('result-name');
+    const resultConst   = document.getElementById('result-constellation');
+    const resultComp    = document.getElementById('result-companions');
+    const noResult      = document.getElementById('no-result');
+
+    function norm(s) {
+      return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[''']/g,"'").trim();
     }
 
-    function renderTables(highlightName = '') {
-      const normQuery = normalize(highlightName);
-      let foundTable = null;
-      let foundGuest = null;
+    function render(query) {
+      const q = norm(query);
+      let foundTable = null, foundGuest = null;
 
-      if (normQuery.length >= 2) {
-        for (const table of TABLES) {
-          for (const guest of table.guests) {
-            if (normalize(guest.name).includes(normQuery)) {
-              foundTable = table;
-              foundGuest = guest;
-              break;
-            }
+      if (q.length >= 2) {
+        outer: for (const t of TABLES) {
+          for (const g of t.guests) {
+            if (norm(g).includes(q)) { foundTable = t; foundGuest = g; break outer; }
           }
-          if (foundTable) break;
         }
       }
 
-      // Banner risultato
-      if (foundGuest && foundTable) {
-        resultGuestName.textContent = foundGuest.name;
-        resultTableConst.textContent = `${foundTable.number} — ${foundTable.constellation}`;
-        const companions = foundTable.guests
-          .filter(g => g.name !== foundGuest.name)
-          .map(g => g.name).join(', ');
-        resultCompanions.textContent = companions ? `Con: ${companions}` : '';
+      if (foundGuest) {
+        resultName.textContent = foundGuest;
+        resultConst.textContent = foundTable.number + ' — ' + foundTable.constellation;
+        const others = foundTable.guests.filter(g => g !== foundGuest);
+        resultComp.textContent = others.length ? 'Con: ' + others.join(', ') : '';
         resultBanner.classList.add('show');
         noResult.style.display = 'none';
-      } else if (normQuery.length >= 2 && !foundGuest) {
+      } else if (q.length >= 2) {
         resultBanner.classList.remove('show');
         noResult.style.display = 'block';
       } else {
@@ -472,49 +155,32 @@ const grid = document.getElementById('tables-grid');
         noResult.style.display = 'none';
       }
 
-      // Render cards
       grid.innerHTML = '';
-      TABLES.forEach(table => {
-        const isHighlighted = foundTable && foundTable.id === table.id;
+      for (const t of TABLES) {
+        const isHL = foundTable && foundTable.id === t.id;
         const card = document.createElement('div');
-        card.className = 'table-card' + (isHighlighted ? ' highlight' : '');
-
-        const guestItems = table.guests.map(g => {
-          const isMe = foundGuest && normalize(g.name) === normalize(foundGuest.name);
-          return `<li class="guest-item${isMe ? ' highlighted' : ''}">
-            <span class="guest-dot"></span>
-            <span>${g.name}</span>
-            
-          </li>`;
+        card.className = 'table-card' + (isHL ? ' highlight' : '');
+        const items = t.guests.map(g => {
+          const isMe = foundGuest && norm(g) === norm(foundGuest);
+          return `<li class="guest-item${isMe ? ' me' : ''}"><span class="guest-dot"></span>${g}</li>`;
         }).join('');
-
         card.innerHTML = `
-          <div class="table-card-header">
-            <p class="table-number">${table.number}</p>
-            <p class="table-constellation">${table.constellation}</p>
-            <p class="table-count">${table.guests.length} ospiti</p>
+          <div class="table-header">
+            <p class="table-number">${t.number}</p>
+            <p class="table-constellation">${t.constellation}</p>
+            <p class="table-count">${t.guests.length} ospiti</p>
           </div>
-          <div class="table-card-body">
-            <ul class="guest-list">${guestItems}</ul>
-          </div>
-        `;
-
+          <div class="table-body"><ul class="guest-list">${items}</ul></div>`;
         grid.appendChild(card);
-
-        if (isHighlighted) {
-          setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
-        }
-      });
+        if (isHL) setTimeout(() => card.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
+      }
     }
 
-    // Init
-    renderTables();
-
-    // Search
+    render('');
     let debounce;
     searchInput.addEventListener('input', () => {
       clearTimeout(debounce);
-      debounce = setTimeout(() => renderTables(searchInput.value), 250);
+      debounce = setTimeout(() => render(searchInput.value), 200);
     });
   </script>
 
