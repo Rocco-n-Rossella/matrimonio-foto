@@ -15,7 +15,6 @@
       padding: 40px 36px;
       box-shadow: 0 4px 32px rgba(0,0,0,0.06);
     }
-
     label.field-label {
       display: block;
       font-size: 11px;
@@ -38,33 +37,33 @@
       transition: border-color 0.2s;
       margin-bottom: 24px;
     }
-    input[type="text"]:focus {
-      border-color: var(--gold);
-      background: var(--white);
-    }
+    input[type="text"]:focus { border-color: var(--gold); background: var(--white); }
 
-    .drop-zone {
+    /* La label wrappa tutto — è lei il vero target del tap */
+    .drop-label {
+      display: block;
       border: 2px dashed var(--border);
       border-radius: 16px;
       padding: 40px 20px;
       text-align: center;
       cursor: pointer;
       background: var(--cream);
-      position: relative;
       transition: border-color 0.25s, background 0.25s;
       margin-bottom: 20px;
+      -webkit-tap-highlight-color: transparent;
     }
-    .drop-zone:hover, .drop-zone.drag-over {
+    .drop-label:hover, .drop-label.drag-over {
       border-color: var(--gold);
       background: #fdf9f3;
     }
-    .drop-zone { cursor: pointer; }
+    .drop-label input[type="file"] {
+      display: none;
+    }
     .drop-icon { font-size: 40px; margin-bottom: 12px; display: block; }
-    .drop-text { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .drop-text { font-size: 14px; color: var(--muted); line-height: 1.6; pointer-events: none; }
     .drop-text strong { color: var(--gold); font-weight: 700; }
-    .drop-hint { font-size: 12px; color: var(--border-2); margin-top: 6px; }
+    .drop-hint { font-size: 12px; color: var(--border-2); margin-top: 6px; pointer-events: none; }
 
-    /* Preview */
     #preview-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
@@ -91,23 +90,17 @@
       font-size: 13px; color: var(--gold); font-weight: 700;
       text-align: center; margin-bottom: 16px; display: none;
     }
-
-    /* Progress */
     .progress-wrap { display: none; margin-bottom: 20px; }
     .progress-label {
       display: flex; justify-content: space-between;
       font-size: 13px; color: var(--muted); margin-bottom: 8px;
     }
-    .progress-bar-bg {
-      background: var(--border); border-radius: 100px; height: 6px; overflow: hidden;
-    }
+    .progress-bar-bg { background: var(--border); border-radius: 100px; height: 6px; overflow: hidden; }
     .progress-bar-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--gold), #e8c07a);
       border-radius: 100px; width: 0%; transition: width 0.3s ease;
     }
-
-    /* Button */
     .btn-upload {
       width: 100%; padding: 15px;
       background: linear-gradient(135deg, #C9A96E, #b8904f);
@@ -118,8 +111,6 @@
     }
     .btn-upload:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
     .btn-upload:disabled { opacity: 0.45; cursor: not-allowed; }
-
-    /* Messaggi */
     .msg {
       display: none; border-radius: 14px;
       padding: 18px 22px; font-size: 14px;
@@ -127,10 +118,7 @@
     }
     .msg-success { background: #f0f7f0; border: 1.5px solid #b3d4b3; color: var(--success); }
     .msg-error   { background: #fdf0f0; border: 1.5px solid #e0b3b3; color: var(--error); }
-
-    @media (max-width: 480px) {
-      .upload-card { padding: 28px 18px; }
-    }
+    @media (max-width: 480px) { .upload-card { padding: 28px 18px; } }
   </style>
 </head>
 <body>
@@ -161,13 +149,13 @@
       <label class="field-label" for="nome-input">Il tuo nome</label>
       <input type="text" id="nome-input" placeholder="Es. Marco Rossi" autocomplete="name" />
 
-      <input type="file" id="file-input" accept="image/*" multiple style="display:none" />
-      <label class="field-label">Le tue foto</label>
-      <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+      <span class="field-label">Le tue foto</span>
+      <label class="drop-label" id="drop-label">
+        <input type="file" id="file-input" accept="image/*" multiple />
         <span class="drop-icon">📷</span>
         <p class="drop-text"><strong>Tocca qui per scegliere le foto</strong><br>oppure trascinale in questo riquadro</p>
         <p class="drop-hint">JPG, PNG, HEIC · max 15 MB per foto · max 20 foto</p>
-      </div>
+      </label>
 
       <div id="file-count" class="file-count"></div>
       <div id="preview-grid"></div>
@@ -200,7 +188,7 @@
     const MAX_FILES = 20;
 
     const fileInput    = document.getElementById('file-input');
-    const dropZone     = document.getElementById('drop-zone');
+    const dropLabel    = document.getElementById('drop-label');
     const previewGrid  = document.getElementById('preview-grid');
     const fileCount    = document.getElementById('file-count');
     const btnUpload    = document.getElementById('btn-upload');
@@ -214,13 +202,15 @@
 
     let selectedFiles = [];
 
-    dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-    dropZone.addEventListener('drop', e => {
+    // Drag & drop sul label
+    dropLabel.addEventListener('dragover',  e => { e.preventDefault(); dropLabel.classList.add('drag-over'); });
+    dropLabel.addEventListener('dragleave', () => dropLabel.classList.remove('drag-over'));
+    dropLabel.addEventListener('drop', e => {
       e.preventDefault();
-      dropZone.classList.remove('drag-over');
+      dropLabel.classList.remove('drag-over');
       addFiles([...e.dataTransfer.files]);
     });
+
     fileInput.addEventListener('change', () => {
       addFiles([...fileInput.files]);
       fileInput.value = '';
@@ -238,14 +228,18 @@
     function renderPreviews() {
       previewGrid.innerHTML = '';
       selectedFiles.forEach((file, idx) => {
-        const url   = URL.createObjectURL(file);
+        const url = URL.createObjectURL(file);
         const thumb = document.createElement('div');
         thumb.className = 'preview-thumb';
-        thumb.innerHTML = `<img src="${url}" alt="anteprima" /><button class="remove-btn" data-idx="${idx}">✕</button>`;
+        thumb.innerHTML = `<img src="${url}" alt="anteprima"/><button class="remove-btn" data-idx="${idx}">✕</button>`;
         previewGrid.appendChild(thumb);
       });
       previewGrid.querySelectorAll('.remove-btn').forEach(btn => {
-        btn.addEventListener('click', () => { selectedFiles.splice(+btn.dataset.idx, 1); renderPreviews(); });
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          selectedFiles.splice(+btn.dataset.idx, 1);
+          renderPreviews();
+        });
       });
       fileCount.style.display = selectedFiles.length ? 'block' : 'none';
       fileCount.textContent = `${selectedFiles.length} foto selezionat${selectedFiles.length === 1 ? 'a' : 'e'}`;
@@ -265,40 +259,17 @@
       });
     }
 
-    // Upload tramite JSONP — bypassa CORS su tutti i dispositivi
+    // JSONP: bypassa CORS su tutti i dispositivi
     function uploadOne(payload) {
       return new Promise((resolve) => {
         const cbName = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-        const timeout = setTimeout(() => {
-          delete window[cbName];
-          resolve(false);
-        }, 45000);
-
-        window[cbName] = function(data) {
-          clearTimeout(timeout);
-          delete window[cbName];
-          resolve(data && data.success ? true : false);
-        };
-
-        const params = new URLSearchParams({
-          nome:     payload.nome,
-          file:     payload.file,
-          fileName: payload.fileName,
-          mimeType: payload.mimeType,
-          callback: cbName
-        });
-
-        const script = document.createElement('script');
-        script.src = SCRIPT_URL + '?' + params.toString();
-        script.onerror = () => {
-          clearTimeout(timeout);
-          delete window[cbName];
-          resolve(false);
-        };
-        document.head.appendChild(script);
-        setTimeout(() => {
-          if (script.parentNode) script.parentNode.removeChild(script);
-        }, 50000);
+        const timer = setTimeout(() => { delete window[cbName]; resolve(false); }, 45000);
+        window[cbName] = (data) => { clearTimeout(timer); delete window[cbName]; resolve(!!(data && data.success)); };
+        const params = new URLSearchParams({ nome: payload.nome, file: payload.file, fileName: payload.fileName, mimeType: payload.mimeType, callback: cbName });
+        const s = document.createElement('script');
+        s.onerror = () => { clearTimeout(timer); delete window[cbName]; resolve(false); };
+        s.src = SCRIPT_URL + '?' + params.toString();
+        document.head.appendChild(s);
       });
     }
 
@@ -316,15 +287,9 @@
         progressFill.style.width = Math.round((i / total) * 100) + '%';
         progressPct.textContent  = Math.round((i / total) * 100) + '%';
         progressText.textContent = `Caricamento foto ${i + 1} di ${total}…`;
-
         try {
           const base64 = await toBase64(selectedFiles[i]);
-          const ok = await uploadOne({
-            nome,
-            file:     base64,
-            fileName: selectedFiles[i].name,
-            mimeType: selectedFiles[i].type
-          });
+          const ok = await uploadOne({ nome, file: base64, fileName: selectedFiles[i].name, mimeType: selectedFiles[i].type });
           ok ? uploaded++ : errors++;
         } catch { errors++; }
       }
@@ -341,8 +306,6 @@
       } else if (uploaded > 0) {
         msgSuccess.innerHTML = `<strong>${uploaded} foto caricate</strong> — ${errors} non riuscite. Riprova per le rimanenti.`;
         msgSuccess.style.display = 'block';
-        selectedFiles = selectedFiles.slice(uploaded);
-        renderPreviews();
       } else {
         showError('Errore durante il caricamento. Controlla la connessione e riprova.');
         btnUpload.disabled = false;
