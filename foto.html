@@ -58,14 +58,7 @@
       border-color: var(--gold);
       background: #fdf9f3;
     }
-    .drop-zone input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-    }
+    .drop-zone { cursor: pointer; }
     .drop-icon { font-size: 40px; margin-bottom: 12px; display: block; }
     .drop-text { font-size: 14px; color: var(--muted); line-height: 1.6; }
     .drop-text strong { color: var(--gold); font-weight: 700; }
@@ -168,9 +161,9 @@
       <label class="field-label" for="nome-input">Il tuo nome</label>
       <input type="text" id="nome-input" placeholder="Es. Marco Rossi" autocomplete="name" />
 
+      <input type="file" id="file-input" accept="image/*" multiple style="display:none" />
       <label class="field-label">Le tue foto</label>
-      <div class="drop-zone" id="drop-zone">
-        <input type="file" id="file-input" accept="image/*" multiple />
+      <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
         <span class="drop-icon">📷</span>
         <p class="drop-text"><strong>Tocca qui per scegliere le foto</strong><br>oppure trascinale in questo riquadro</p>
         <p class="drop-hint">JPG, PNG, HEIC · max 15 MB per foto · max 20 foto</p>
@@ -272,30 +265,40 @@
       });
     }
 
-    // Invia una singola foto tramite no-cors fetch (compatibile mobile)
-    // Con no-cors non possiamo leggere la risposta, quindi assumiamo successo
-    // se la richiesta non lancia eccezione entro il timeout
+    // Upload tramite JSONP — bypassa CORS su tutti i dispositivi
     function uploadOne(payload) {
       return new Promise((resolve) => {
-        const controller = new AbortController();
+        const cbName = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
         const timeout = setTimeout(() => {
-          // Timeout dopo 30s: assumiamo che sia arrivato (Apps Script è lento)
-          resolve(true);
-        }, 30000);
-
-        fetch(SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: JSON.stringify(payload)
-        })
-        .then(() => {
-          clearTimeout(timeout);
-          resolve(true);
-        })
-        .catch(() => {
-          clearTimeout(timeout);
+          delete window[cbName];
           resolve(false);
+        }, 45000);
+
+        window[cbName] = function(data) {
+          clearTimeout(timeout);
+          delete window[cbName];
+          resolve(data && data.success ? true : false);
+        };
+
+        const params = new URLSearchParams({
+          nome:     payload.nome,
+          file:     payload.file,
+          fileName: payload.fileName,
+          mimeType: payload.mimeType,
+          callback: cbName
         });
+
+        const script = document.createElement('script');
+        script.src = SCRIPT_URL + '?' + params.toString();
+        script.onerror = () => {
+          clearTimeout(timeout);
+          delete window[cbName];
+          resolve(false);
+        };
+        document.head.appendChild(script);
+        setTimeout(() => {
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }, 50000);
       });
     }
 
@@ -307,7 +310,7 @@
       hideMessages();
 
       const total = selectedFiles.length;
-      let sent = 0;
+      let uploaded = 0, errors = 0;
 
       for (let i = 0; i < total; i++) {
         progressFill.style.width = Math.round((i / total) * 100) + '%';
@@ -318,24 +321,32 @@
           const base64 = await toBase64(selectedFiles[i]);
           const ok = await uploadOne({
             nome,
-            file: base64,
+            file:     base64,
             fileName: selectedFiles[i].name,
             mimeType: selectedFiles[i].type
           });
-          if (ok) sent++;
-        } catch { /* ignora */ }
+          ok ? uploaded++ : errors++;
+        } catch { errors++; }
       }
 
       progressFill.style.width = '100%';
       progressPct.textContent  = '100%';
       progressWrap.style.display = 'none';
 
-      // Con no-cors assumiamo sempre successo se non ci sono errori di rete
-      msgSuccess.innerHTML = `<strong>Grazie mille, ${nome}! 💙</strong><br>${sent} foto inviat${sent === 1 ? 'a' : 'e'} con successo nella nostra galleria privata.`;
-      msgSuccess.style.display = 'block';
-      selectedFiles = [];
-      renderPreviews();
-      btnUpload.disabled = true;
+      if (uploaded > 0 && errors === 0) {
+        msgSuccess.innerHTML = `<strong>Grazie mille, ${nome}! 💙</strong><br>${uploaded} foto caricate con successo nella nostra galleria privata.`;
+        msgSuccess.style.display = 'block';
+        selectedFiles = [];
+        renderPreviews();
+      } else if (uploaded > 0) {
+        msgSuccess.innerHTML = `<strong>${uploaded} foto caricate</strong> — ${errors} non riuscite. Riprova per le rimanenti.`;
+        msgSuccess.style.display = 'block';
+        selectedFiles = selectedFiles.slice(uploaded);
+        renderPreviews();
+      } else {
+        showError('Errore durante il caricamento. Controlla la connessione e riprova.');
+        btnUpload.disabled = false;
+      }
     });
   </script>
 
