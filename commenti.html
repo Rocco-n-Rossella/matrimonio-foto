@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lascia un messaggio — Rocco & Rossella</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .msg-card {
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 4px 24px rgba(14,118,16,0.06);
+    }
+    label.field-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+      color: var(--dark);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"] { padding: 12px 16px; margin-bottom: 22px; }
+    textarea { padding: 14px 16px; margin-bottom: 22px; resize: vertical; min-height: 120px; line-height: 1.6; }
+    input[type="text"]:focus, textarea:focus { border-color: var(--green); background: var(--white); }
+
+    .char-count { font-size: 11px; color: var(--muted); text-align: right; margin-top: -18px; margin-bottom: 18px; }
+
+    .btn-send {
+      width: 100%; padding: 15px;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #fff; border: none; border-radius: 50px;
+      font-family: 'Lato', sans-serif;
+      font-size: 15px; font-weight: 700; letter-spacing: 1px;
+      cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-send:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+    .btn-send:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .msg {
+      display: none; border-radius: 14px;
+      padding: 18px 22px; font-size: 14px;
+      line-height: 1.6; margin-top: 20px; text-align: center;
+    }
+    .msg-success { background: var(--green-light); border: 1.5px solid var(--border-2); color: var(--green-dark); }
+    .msg-error   { background: #fdf0f0; border: 1.5px solid #e0b3b3; color: #8a2a2a; }
+
+    .heart-dec {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+      letter-spacing: 8px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <img src="nuvola.png" style="width:28px; opacity:0.9;" alt="" />
+        Rocco & Rossella
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Il Giorno</a></li>
+        <li><a href="tableau.html">Tavoli</a></li>
+        <li><a href="menu.html">Menù</a></li>
+        <li><a href="foto.html">📷 Foto</a></li>
+        <li><a href="commenti.html" class="active">💬</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="hero" style="padding:44px 24px 36px;">
+    <img src="nuvola.png" class="hero-nuvola hero-nuvola-l" alt="" />
+    <img src="nuvola.png" class="hero-nuvola hero-nuvola-r" alt="" />
+    <p class="hero-date">24 Giugno 2026</p>
+    <div class="hero-names" style="font-size:clamp(1.8rem,5vw,3rem);">
+      <em>Un pensiero per noi</em>
+    </div>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Lasciaci un messaggio, un augurio, un ricordo.<br>Lo conserveremo per sempre.</p>
+  </div>
+
+  <div class="page-body">
+    <div class="msg-card">
+
+      <div class="heart-dec">💚 🌿 💚</div>
+
+      <label class="field-label" for="nome-input">Il tuo nome</label>
+      <input type="text" id="nome-input" placeholder="Es. Marco e Giulia" autocomplete="name" />
+
+      <label class="field-label" for="msg-input">Il tuo messaggio</label>
+      <textarea id="msg-input" placeholder="Scrivi qui il tuo pensiero per Rocco e Rossella…" maxlength="500"></textarea>
+      <div class="char-count"><span id="char-count">0</span>/500</div>
+
+      <button class="btn-send" id="btn-send" disabled>
+        💚 &nbsp;Invia il messaggio
+      </button>
+
+      <div class="msg msg-success" id="msg-success"></div>
+      <div class="msg msg-error"   id="msg-error"></div>
+
+    </div>
+  </div>
+
+  <footer>
+    <img src="nuvola.png" alt="" />
+    Rocco &amp; Rossella &nbsp;·&nbsp; 24 Giugno 2026 &nbsp;·&nbsp; Barletta
+  </footer>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwOmO-SYxM8b9c8LaH-erVfcw5jHc0ITyMw4MW-PLX8QQqs0NHAILN7wSJOnnJL4xmOew/exec';
+
+    const nomeInput  = document.getElementById('nome-input');
+    const msgInput   = document.getElementById('msg-input');
+    const btnSend    = document.getElementById('btn-send');
+    const charCount  = document.getElementById('char-count');
+    const msgSuccess = document.getElementById('msg-success');
+    const msgError   = document.getElementById('msg-error');
+
+    function updateState() {
+      const hasNome = nomeInput.value.trim().length > 0;
+      const hasMsg  = msgInput.value.trim().length > 2;
+      btnSend.disabled = !(hasNome && hasMsg);
+      charCount.textContent = msgInput.value.length;
+    }
+
+    nomeInput.addEventListener('input', updateState);
+    msgInput.addEventListener('input', updateState);
+
+    function hideMessages() { msgSuccess.style.display = 'none'; msgError.style.display = 'none'; }
+
+    btnSend.addEventListener('click', async () => {
+      const nome = nomeInput.value.trim();
+      const messaggio = msgInput.value.trim();
+      if (!nome || !messaggio) return;
+
+      btnSend.disabled = true;
+      btnSend.textContent = 'Invio in corso…';
+      hideMessages();
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ tipo: 'commento', nome, messaggio })
+        });
+        msgSuccess.innerHTML = `<strong>Grazie, ${nome}! 💚</strong><br>Il tuo messaggio è stato consegnato a Rocco e Rossella.`;
+        msgSuccess.style.display = 'block';
+        nomeInput.value = '';
+        msgInput.value = '';
+        charCount.textContent = '0';
+      } catch {
+        msgError.textContent = 'Errore di connessione. Riprova tra qualche istante.';
+        msgError.style.display = 'block';
+        btnSend.disabled = false;
+      }
+
+      btnSend.textContent = '💚  Invia il messaggio';
+    });
+  </script>
+
+</body>
+</html>

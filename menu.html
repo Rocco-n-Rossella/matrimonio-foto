@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il Menù — Rocco & Rossella</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .menu-hero-img {
+      width: 100%;
+      background: var(--green-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 32px 24px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-hero-img img.illus {
+      max-width: 320px;
+      width: 80%;
+      object-fit: contain;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    .menu-hero-img .nuvola-l { position: absolute; left: -20px; bottom: 20px; width: 110px; opacity: 0.4; transform: scaleX(-1); }
+    .menu-hero-img .nuvola-r { position: absolute; right: -20px; top: 20px; width: 110px; opacity: 0.4; }
+
+    .menu-header {
+      width: 100%;
+      background: var(--green);
+      text-align: center;
+      padding: 22px 24px;
+    }
+
+    /* ── PORTATE ── */
+    .menu-section { margin-bottom: 40px; }
+    .portata-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .portata-label::before,
+    .portata-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .portata-label span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      white-space: nowrap;
+    }
+    .portata-icon { font-size: 20px; }
+
+    .portate-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .portata-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--green);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 18px;
+    }
+    .portata-item.placeholder {
+      border-left-color: var(--border);
+      background: var(--cream);
+    }
+    .portata-nome {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 2px;
+    }
+    .portata-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .portata-item.placeholder .portata-nome { color: var(--muted); font-style: italic; }
+
+    .nuvola-sep { margin: 8px 0; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <img src="nuvola.png" style="width:28px; opacity:0.9;" alt="" />
+        Rocco & Rossella
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Il Giorno</a></li>
+        <li><a href="tableau.html">Tavoli</a></li>
+        <li><a href="menu.html" class="active">Menù</a></li>
+        <li><a href="foto.html">📷 Foto</a></li>
+        <li><a href="commenti.html">💬</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="menu-hero-img">
+    <img src="nuvola.png" class="nuvola-l" alt="" />
+    <img src="menu.png" class="illus" alt="Rocco e Rossella con le ciotole" />
+    <img src="nuvola.png" class="nuvola-r" alt="" />
+  </div>
+
+  <div class="menu-header">
+    <p class="hero-date" style="color:rgba(255,255,255,0.65); font-size:11px; letter-spacing:4px; text-transform:uppercase; margin-bottom:6px;">Ricevimento · 24 Giugno 2026</p>
+    <div style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,5vw,2.8rem); color:#fff; font-style:italic;">Il Menù</div>
+  </div>
+
+  <div class="page-body" style="max-width:640px;">
+
+    <div class="nuvola-sep">
+      <div style="display:flex; justify-content:center; gap:12px; padding:4px 0;">
+        <img src="nuvola.png" style="width:60px; opacity:0.6; transform:scaleX(-1)" alt="" />
+        <img src="nuvola.png" style="width:80px; opacity:0.8;" alt="" />
+        <img src="nuvola.png" style="width:60px; opacity:0.6; transform:scaleX(-1)" alt="" />
+      </div>
+    </div>
+
+    <!-- ANTIPASTI -->
+    <div class="menu-section">
+      <div class="portata-label"><span class="portata-icon">🥗</span><span>Antipasti</span></div>
+      <ul class="portate-list">
+        <li class="portata-item placeholder">
+          <p class="portata-nome">Da definire</p>
+          <p class="portata-desc">Il menù verrà aggiornato presto</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- PRIMI -->
+    <div class="menu-section">
+      <div class="portata-label"><span class="portata-icon">🍝</span><span>Primi Piatti</span></div>
+      <ul class="portate-list">
+        <li class="portata-item placeholder">
+          <p class="portata-nome">Da definire</p>
+          <p class="portata-desc">Il menù verrà aggiornato presto</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SECONDI -->
+    <div class="menu-section">
+      <div class="portata-label"><span class="portata-icon">🍖</span><span>Secondi Piatti</span></div>
+      <ul class="portate-list">
+        <li class="portata-item placeholder">
+          <p class="portata-nome">Da definire</p>
+          <p class="portata-desc">Il menù verrà aggiornato presto</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- DOLCI -->
+    <div class="menu-section">
+      <div class="portata-label"><span class="portata-icon">🎂</span><span>Dolci</span></div>
+      <ul class="portate-list">
+        <li class="portata-item placeholder">
+          <p class="portata-nome">Da definire</p>
+          <p class="portata-desc">Il menù verrà aggiornato presto</p>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>
+    <img src="nuvola.png" alt="" />
+    Rocco &amp; Rossella &nbsp;·&nbsp; 24 Giugno 2026 &nbsp;·&nbsp; Barletta
+  </footer>
+
+</body>
+</html>
