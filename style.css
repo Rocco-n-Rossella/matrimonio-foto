@@ -2,9 +2,6 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ══════════════════════════════════
-   TEMA PRINCIPALE — Bianco / Verde
-   ══════════════════════════════════ */
 :root {
   --green:       #0e7610;
   --green-light: #e8f5e8;
@@ -17,10 +14,7 @@
   --muted:       #6b6b6b;
   --border:      #d4e8d4;
   --border-2:    #b8d4b8;
-
-  /* Tema costellazioni */
   --star-bg:     #0d0e1a;
-  --star-bg2:    #151628;
   --star-gold:   #C9A96E;
   --star-pale:   #E8D5B0;
   --star-border: rgba(201,169,110,0.25);
@@ -45,7 +39,7 @@ nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 12px rgba(14,118,16,0.15);
+  box-shadow: 0 2px 12px rgba(14,118,16,0.2);
 }
 .nav-inner {
   max-width: 960px;
@@ -53,37 +47,43 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
-  height: 56px;
+  padding: 0 16px;
+  height: 52px;
+  gap: 8px;
 }
 .nav-brand {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: #fff;
   text-decoration: none;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   white-space: nowrap;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
+.nav-brand img { width: 24px; opacity: 0.9; flex-shrink: 0; }
 .nav-links {
   display: flex;
-  gap: 4px;
+  gap: 2px;
   list-style: none;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 .nav-links a {
   display: block;
-  padding: 6px 13px;
-  font-size: 11px;
+  padding: 5px 9px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: rgba(255,255,255,0.75);
   text-decoration: none;
   border-radius: 50px;
   transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
 }
 .nav-links a:hover,
 .nav-links a.active {
@@ -94,163 +94,110 @@ nav {
 /* ── HERO VERDE ── */
 .hero {
   width: 100%;
-  background: linear-gradient(160deg, var(--green-dark) 0%, var(--green) 100%);
-  color: #fff;
+  background: var(--white);
+  color: var(--dark);
   text-align: center;
-  padding: 56px 24px 48px;
+  padding: 52px 24px 44px;
   position: relative;
   overflow: hidden;
+  border-bottom: 3px solid var(--green);
 }
-.hero-nuvola {
-  position: absolute;
-  opacity: 0.12;
-  pointer-events: none;
-}
-.hero-nuvola-l { left: -40px; top: 10px; width: 180px; transform: scaleX(-1); }
-.hero-nuvola-r { right: -40px; bottom: 10px; width: 180px; }
+.hero-nuvola { position: absolute; opacity: 0.15; pointer-events: none; }
+.hero-nuvola-l { left: -40px; top: 10px; width: 160px; transform: scaleX(-1); }
+.hero-nuvola-r { right: -40px; bottom: 10px; width: 160px; }
 
 .hero-date {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 14px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--green); margin-bottom: 14px;
 }
 .hero-names {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.6rem, 8vw, 4.5rem);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: 1px;
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  font-weight: 400; line-height: 1.1; letter-spacing: 1px;
+  color: var(--dark);
 }
-.hero-names em { font-style: italic; color: var(--gold); }
+.hero-names em { font-style: italic; color: var(--green); }
 .hero-amp {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: clamp(1.8rem, 5vw, 3rem);
-  color: rgba(255,255,255,0.5);
-  display: block;
-  line-height: 1;
-  margin: 4px 0;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  color: var(--muted); display: block; line-height: 1; margin: 4px 0;
 }
 .hero-sub {
-  font-size: 14px;
-  font-weight: 300;
-  color: rgba(255,255,255,0.65);
-  margin-top: 16px;
-  line-height: 1.7;
+  font-size: 14px; font-weight: 300;
+  color: var(--muted); margin-top: 16px; line-height: 1.7;
 }
 .hero-divider {
   width: 50px; height: 2px;
-  background: var(--gold);
-  margin: 18px auto;
-  border-radius: 2px;
-  opacity: 0.7;
+  background: var(--green);
+  margin: 16px auto; border-radius: 2px; opacity: 0.5;
 }
 
-/* ── NUVOLA DECORATIVA ── */
+/* ── NUVOLA SEPARATORE ── */
 .nuvola-sep {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  padding: 8px 0;
-  overflow: hidden;
+  display: flex; justify-content: center;
+  gap: 14px; padding: 6px 0; overflow: hidden;
 }
-.nuvola-sep img { width: 70px; opacity: 0.7; }
-.nuvola-sep img:nth-child(2) { width: 90px; opacity: 0.9; margin-top: -8px; }
+.nuvola-sep img { width: 64px; opacity: 0.65; }
+.nuvola-sep img:nth-child(2) { width: 84px; opacity: 0.85; margin-top: -6px; }
 
 /* ── FOTO CTA BANNER ── */
 .foto-banner {
-  width: 100%;
-  background: var(--gold);
-  padding: 14px 24px;
-  text-align: center;
+  width: 100%; background: var(--green);
+  padding: 13px 24px; text-align: center;
 }
 .foto-banner a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  color: #fff; text-decoration: none;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.5px;
+  display: inline-flex; align-items: center; gap: 10px;
 }
 
 /* ── PAGE BODY ── */
 .page-body {
-  width: 100%;
-  max-width: 900px;
-  padding: 48px 24px 64px;
-  flex: 1;
+  width: 100%; max-width: 900px;
+  padding: 44px 24px 60px; flex: 1;
 }
 
 /* ── SECTION TITLE ── */
 .section-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--green);
-  text-align: center;
-  margin-bottom: 8px;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--green); text-align: center; margin-bottom: 8px;
 }
 .section-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.6rem, 4vw, 2.1rem);
-  font-weight: 600;
-  text-align: center;
-  color: var(--dark);
-  margin-bottom: 8px;
-  line-height: 1.2;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 600; text-align: center;
+  color: var(--dark); margin-bottom: 8px; line-height: 1.2;
 }
 .section-sub {
-  font-size: 14px;
-  color: var(--muted);
-  text-align: center;
-  line-height: 1.7;
-  margin-bottom: 36px;
+  font-size: 14px; color: var(--muted);
+  text-align: center; line-height: 1.7; margin-bottom: 32px;
 }
 
 /* ── CARD ── */
 .card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 36px;
-  box-shadow: 0 4px 24px rgba(14,118,16,0.06);
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 20px; padding: 32px;
+  box-shadow: 0 4px 20px rgba(14,118,16,0.06);
 }
 
 /* ── FOOTER ── */
 footer {
-  width: 100%;
-  text-align: center;
-  padding: 20px 24px;
-  font-size: 12px;
-  color: var(--muted);
-  letter-spacing: 1px;
-  border-top: 1px solid var(--border);
-  background: var(--white);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  width: 100%; text-align: center;
+  padding: 18px 24px; font-size: 12px;
+  color: var(--muted); letter-spacing: 1px;
+  border-top: 1px solid var(--border); background: var(--white);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
 }
-footer img { width: 48px; opacity: 0.5; }
+footer img { width: 40px; opacity: 0.4; }
 
-/* ══════════════════════════════════
-   TEMA COSTELLAZIONI — per tableau
-   ══════════════════════════════════ */
-body.stelle {
-  background: var(--star-bg);
-  color: #e8e0d0;
-}
+/* ══ TEMA COSTELLAZIONI (solo tableau) ══ */
+body.stelle { background: var(--star-bg); color: #e8e0d0; }
 body.stelle::before {
   content: '';
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background-image:
     radial-gradient(1px 1px at 8% 12%, rgba(255,255,255,0.9) 0%, transparent 100%),
     radial-gradient(1.5px 1.5px at 22% 34%, rgba(255,255,255,0.7) 0%, transparent 100%),
@@ -272,27 +219,18 @@ body.stelle::before {
     radial-gradient(1px 1px at 72% 82%, rgba(255,255,255,0.6) 0%, transparent 100%),
     radial-gradient(1.5px 1.5px at 85% 92%, rgba(255,255,255,0.7) 0%, transparent 100%),
     radial-gradient(1px 1px at 96% 75%, rgba(255,255,255,0.5) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
+  pointer-events: none; z-index: 0;
 }
-body.stelle nav {
-  background: rgba(13,14,26,0.95);
-  border-bottom: 1px solid var(--star-border);
-  box-shadow: none;
-}
+body.stelle nav { background: rgba(13,14,26,0.96); border-bottom: 1px solid var(--star-border); box-shadow: none; }
 body.stelle nav .nav-links a { color: rgba(255,255,255,0.5); }
 body.stelle nav .nav-links a:hover,
 body.stelle nav .nav-links a.active { color: var(--star-gold); background: rgba(201,169,110,0.1); }
 body.stelle nav .nav-brand { color: var(--star-gold); }
-body.stelle footer {
-  background: rgba(13,14,26,0.95);
-  border-top: 1px solid var(--star-border);
-  color: rgba(255,255,255,0.3);
-}
+body.stelle footer { background: rgba(13,14,26,0.96); border-top: 1px solid var(--star-border); color: rgba(255,255,255,0.3); }
 body.stelle .page-body { position: relative; z-index: 1; }
 
-@media (max-width: 520px) {
-  .nav-links a { padding: 6px 9px; font-size: 10px; letter-spacing: 1px; }
-  .page-body { padding: 32px 16px 48px; }
-  .card { padding: 24px 18px; }
+@media (max-width: 420px) {
+  .nav-brand span.brand-text { display: none; }
+  .nav-links a { padding: 5px 7px; font-size: 9px; }
+  .page-body { padding: 28px 14px 48px; }
 }

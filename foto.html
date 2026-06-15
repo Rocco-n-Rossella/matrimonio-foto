@@ -3,70 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carica le tue foto — Rocco & Rossella</title>
+  <title>Foto — Rocco & Rossella</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .upload-card {
-      max-width: 560px; margin: 0 auto;
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 20px; padding: 36px;
-      box-shadow: 0 4px 24px rgba(14,118,16,0.06);
-    }
+    .upload-card { max-width: 540px; margin: 0 auto 48px; background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: 0 4px 20px rgba(14,118,16,0.06); }
     label.field-label { display:block; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:7px; }
-    input[type="text"] { width:100%; padding:12px 16px; border:1.5px solid var(--border); border-radius:12px; font-family:'Lato',sans-serif; font-size:15px; color:var(--dark); background:var(--cream); outline:none; transition:border-color 0.2s; margin-bottom:22px; }
-    input[type="text"]:focus { border-color:var(--green); background:var(--white); }
-    .drop-label { display:block; border:2px dashed var(--border); border-radius:16px; padding:38px 20px; text-align:center; cursor:pointer; background:var(--cream); transition:border-color 0.25s, background 0.25s; margin-bottom:18px; -webkit-tap-highlight-color:transparent; }
+    input[type="text"] { width:100%; padding:12px 15px; border:1.5px solid var(--border); border-radius:12px; font-family:'Lato',sans-serif; font-size:15px; color:var(--dark); background:var(--cream); outline:none; transition:border-color 0.2s; margin-bottom:20px; }
+    input[type="text"]:focus { border-color:var(--green); background:#fff; }
+    .drop-label { display:block; border:2px dashed var(--border); border-radius:14px; padding:34px 18px; text-align:center; cursor:pointer; background:var(--cream); transition:border-color 0.25s, background 0.25s; margin-bottom:16px; -webkit-tap-highlight-color:transparent; }
     .drop-label:hover { border-color:var(--green); background:var(--green-light); }
     .drop-label input[type="file"] { display:none; }
-    .drop-icon { font-size:38px; margin-bottom:10px; display:block; pointer-events:none; }
+    .drop-icon { font-size:36px; margin-bottom:9px; display:block; pointer-events:none; }
     .drop-text { font-size:14px; color:var(--muted); line-height:1.6; pointer-events:none; }
     .drop-text strong { color:var(--green); }
     .drop-hint { font-size:11px; color:var(--border-2); margin-top:5px; pointer-events:none; }
-    #preview-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(74px,1fr)); gap:8px; margin-bottom:18px; }
-    .preview-thumb { aspect-ratio:1; border-radius:10px; overflow:hidden; position:relative; border:1.5px solid var(--border); }
+    #preview-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(70px,1fr)); gap:7px; margin-bottom:16px; }
+    .preview-thumb { aspect-ratio:1; border-radius:9px; overflow:hidden; position:relative; border:1.5px solid var(--border); }
     .preview-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
-    .remove-btn { position:absolute; top:3px; right:3px; background:rgba(0,0,0,0.55); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-    .file-count { font-size:13px; color:var(--green); font-weight:700; text-align:center; margin-bottom:14px; display:none; }
-    .progress-wrap { display:none; margin-bottom:18px; }
-    .progress-label { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-bottom:7px; }
+    .remove-btn { position:absolute; top:3px; right:3px; background:rgba(0,0,0,0.55); color:#fff; border:none; border-radius:50%; width:19px; height:19px; font-size:9px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .file-count { font-size:13px; color:var(--green); font-weight:700; text-align:center; margin-bottom:12px; display:none; }
+    .progress-wrap { display:none; margin-bottom:16px; }
+    .progress-label { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-bottom:6px; }
     .progress-bar-bg { background:var(--border); border-radius:100px; height:6px; overflow:hidden; }
     .progress-bar-fill { height:100%; background:linear-gradient(90deg,var(--green),#4caf50); border-radius:100px; width:0%; transition:width 0.4s ease; }
-    .btn-upload { width:100%; padding:15px; background:linear-gradient(135deg,var(--green),var(--green-dark)); color:#fff; border:none; border-radius:50px; font-family:'Lato',sans-serif; font-size:15px; font-weight:700; letter-spacing:1px; cursor:pointer; transition:opacity 0.2s,transform 0.15s; }
+    .btn-upload { width:100%; padding:14px; background:linear-gradient(135deg,var(--green),var(--green-dark)); color:#fff; border:none; border-radius:50px; font-family:'Lato',sans-serif; font-size:15px; font-weight:700; letter-spacing:1px; cursor:pointer; transition:opacity 0.2s,transform 0.15s; }
     .btn-upload:hover:not(:disabled) { opacity:0.9; transform:translateY(-1px); }
-    .btn-upload:disabled { opacity:0.45; cursor:not-allowed; }
-    .msg { display:none; border-radius:14px; padding:16px 20px; font-size:14px; line-height:1.6; margin-top:18px; text-align:center; }
+    .btn-upload:disabled { opacity:0.4; cursor:not-allowed; }
+    .msg { display:none; border-radius:13px; padding:14px 18px; font-size:14px; line-height:1.6; margin-top:16px; text-align:center; }
     .msg-success { background:var(--green-light); border:1.5px solid var(--border-2); color:var(--green-dark); }
     .msg-error { background:#fdf0f0; border:1.5px solid #e0b3b3; color:#8a2a2a; }
-    @media (max-width:480px) { .upload-card { padding:24px 18px; } }
+
+    /* ── GALLERIA ── */
+    .gallery-section { margin-top: 8px; }
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+    @media (max-width: 400px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
+    .photo-item { aspect-ratio: 1; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid var(--border); transition: border-color 0.2s, transform 0.2s; }
+    .photo-item:hover { border-color: var(--green); transform: scale(1.02); }
+    .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-loading { text-align: center; padding: 32px; color: var(--muted); font-size: 14px; }
+    .gallery-empty { text-align: center; padding: 32px; color: var(--muted); font-size: 14px; }
+
+    /* lightbox */
+    .lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:1000; align-items:center; justify-content:center; }
+    .lightbox.open { display:flex; }
+    .lightbox img { max-width:92vw; max-height:88vh; border-radius:8px; object-fit:contain; }
+    .lightbox-close { position:absolute; top:16px; right:20px; color:#fff; font-size:28px; cursor:pointer; background:none; border:none; line-height:1; }
   </style>
 </head>
 <body>
   <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
-        <img src="nuvola.png" style="width:28px;opacity:0.9;" alt="" />
-        Rocco & Rossella
+        <img src="nuvola.png" alt="" />
+        <span class="brand-text">R&amp;R ❤️☀️</span>
       </a>
       <ul class="nav-links">
-        <li><a href="index.html">Il Giorno</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="tableau.html">Tavoli</a></li>
         <li><a href="menu.html">Menù</a></li>
-        <li><a href="foto.html" class="active">📷 Foto</a></li>
+        <li><a href="foto.html" class="active">📷</a></li>
         <li><a href="commenti.html">💬</a></li>
       </ul>
     </div>
   </nav>
 
-  <div class="hero">
+  <div class="hero" style="padding:44px 24px 34px;">
     <img src="nuvola.png" class="hero-nuvola hero-nuvola-l" alt="" />
     <img src="nuvola.png" class="hero-nuvola hero-nuvola-r" alt="" />
     <p class="hero-date">24 Giugno 2026</p>
-    <div class="hero-names" style="font-size:clamp(1.8rem,5vw,3rem);"><em>Le vostre foto</em></div>
+    <div class="hero-names" style="font-size:clamp(1.8rem,5vw,3rem);"><em>Le nostre foto</em></div>
     <div class="hero-divider"></div>
-    <p class="hero-sub">Hai catturato un momento speciale?<br>Regalacelo — resterà con noi per sempre.</p>
+    <p class="hero-sub">Carica i tuoi scatti e guarda quelli degli altri ospiti.</p>
   </div>
 
   <div class="page-body">
+
+    <!-- UPLOAD -->
     <div class="upload-card">
       <label class="field-label" for="nome-input">Il tuo nome</label>
       <input type="text" id="nome-input" placeholder="Es. Marco Rossi" autocomplete="name" />
@@ -74,8 +86,8 @@
       <label class="drop-label" id="drop-label">
         <input type="file" id="file-input" accept="image/*" multiple />
         <span class="drop-icon">📷</span>
-        <p class="drop-text"><strong>Tocca qui per scegliere le foto</strong><br>oppure trascinale in questo riquadro</p>
-        <p class="drop-hint">JPG, PNG, HEIC · max 15 MB per foto · max 20 foto</p>
+        <p class="drop-text"><strong>Tocca qui per scegliere le foto</strong><br>oppure trascinale qui</p>
+        <p class="drop-hint">JPG, PNG, HEIC · max 15 MB · max 20 foto</p>
       </label>
       <div id="file-count" class="file-count"></div>
       <div id="preview-grid"></div>
@@ -87,102 +99,161 @@
       <div class="msg msg-success" id="msg-success"></div>
       <div class="msg msg-error" id="msg-error"></div>
     </div>
+
+    <!-- GALLERIA -->
+    <div class="gallery-section">
+      <div class="nuvola-sep" style="margin-bottom:24px;">
+        <img src="nuvola.png" alt="" style="transform:scaleX(-1)" />
+        <img src="nuvola.png" alt="" />
+        <img src="nuvola.png" alt="" style="transform:scaleX(-1)" />
+      </div>
+      <p class="section-label">La galleria</p>
+      <h2 class="section-title">Le foto di tutti</h2>
+      <p class="section-sub">Tutti gli scatti caricati dagli ospiti.</p>
+      <div id="gallery-loading" class="gallery-loading">Caricamento foto…</div>
+      <div id="gallery-empty"   class="gallery-empty"   style="display:none;">Nessuna foto ancora. Sii il primo a caricare!</div>
+      <div id="photo-grid"      class="photo-grid"></div>
+    </div>
+
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lb-close">✕</button>
+    <img id="lb-img" src="" alt="" />
   </div>
 
   <footer>
     <img src="nuvola.png" alt="" />
-    Rocco &amp; Rossella &nbsp;·&nbsp; 24 Giugno 2026 &nbsp;·&nbsp; Barletta
+    Rocco &amp; Rossella ❤️☀️ · 24 Giugno 2026 · Barletta
   </footer>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwOmO-SYxM8b9c8LaH-erVfcw5jHc0ITyMw4MW-PLX8QQqs0NHAILN7wSJOnnJL4xmOew/exec';
+    const SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycbwOmO-SYxM8b9c8LaH-erVfcw5jHc0ITyMw4MW-PLX8QQqs0NHAILN7wSJOnnJL4xmOew/exec';
+    const FOLDER_ID   = '1H5bPRkI2WpKmc-v9RNQnORn-FZfeh3qu';
+    const DRIVE_API   = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+mimeType+contains+'image/'&fields=files(id,name,thumbnailLink,webContentLink)&key=AIzaSyD-placeholder`;
     const MAX_MB = 15, MAX_FILES = 20;
-    const fileInput = document.getElementById('file-input');
-    const dropLabel = document.getElementById('drop-label');
-    const previewGrid = document.getElementById('preview-grid');
-    const fileCount = document.getElementById('file-count');
-    const btnUpload = document.getElementById('btn-upload');
+
+    // ── UPLOAD ──
+    const fileInput    = document.getElementById('file-input');
+    const dropLabel    = document.getElementById('drop-label');
+    const previewGrid  = document.getElementById('preview-grid');
+    const fileCount    = document.getElementById('file-count');
+    const btnUpload    = document.getElementById('btn-upload');
     const progressWrap = document.getElementById('progress-wrap');
     const progressFill = document.getElementById('progress-fill');
     const progressText = document.getElementById('progress-text');
-    const progressPct = document.getElementById('progress-pct');
-    const msgSuccess = document.getElementById('msg-success');
-    const msgError = document.getElementById('msg-error');
-    const nomeInput = document.getElementById('nome-input');
-    let selectedFiles = [];
+    const progressPct  = document.getElementById('progress-pct');
+    const msgSuccess   = document.getElementById('msg-success');
+    const msgError     = document.getElementById('msg-error');
+    const nomeInput    = document.getElementById('nome-input');
+    let selectedFiles  = [];
 
     dropLabel.addEventListener('dragover', e => { e.preventDefault(); dropLabel.style.borderColor='var(--green)'; });
     dropLabel.addEventListener('dragleave', () => { dropLabel.style.borderColor=''; });
     dropLabel.addEventListener('drop', e => { e.preventDefault(); dropLabel.style.borderColor=''; addFiles([...e.dataTransfer.files]); });
     fileInput.addEventListener('change', () => { addFiles([...fileInput.files]); fileInput.value=''; });
 
-    function addFiles(newFiles) {
-      const images = newFiles.filter(f => f.type.startsWith('image/'));
-      const tooBig = images.filter(f => f.size > MAX_MB*1024*1024);
-      if (tooBig.length) showError(`${tooBig.length} foto superano i ${MAX_MB} MB.`);
-      const valid = images.filter(f => f.size <= MAX_MB*1024*1024);
-      selectedFiles = [...selectedFiles, ...valid].slice(0, MAX_FILES);
+    function addFiles(f) {
+      const imgs = f.filter(x => x.type.startsWith('image/'));
+      const big  = imgs.filter(x => x.size > MAX_MB*1024*1024);
+      if (big.length) showError(`${big.length} foto superano i ${MAX_MB} MB.`);
+      selectedFiles = [...selectedFiles, ...imgs.filter(x => x.size <= MAX_MB*1024*1024)].slice(0, MAX_FILES);
       renderPreviews();
     }
     function renderPreviews() {
       previewGrid.innerHTML = '';
-      selectedFiles.forEach((file, idx) => {
-        const url = URL.createObjectURL(file);
-        const thumb = document.createElement('div');
-        thumb.className = 'preview-thumb';
-        thumb.innerHTML = `<img src="${url}" alt=""/><button class="remove-btn" data-idx="${idx}">✕</button>`;
-        previewGrid.appendChild(thumb);
+      selectedFiles.forEach((f,i) => {
+        const t = document.createElement('div');
+        t.className = 'preview-thumb';
+        t.innerHTML = `<img src="${URL.createObjectURL(f)}" alt=""/><button class="remove-btn" data-i="${i}">✕</button>`;
+        previewGrid.appendChild(t);
       });
-      previewGrid.querySelectorAll('.remove-btn').forEach(btn => {
-        btn.addEventListener('click', e => { e.preventDefault(); selectedFiles.splice(+btn.dataset.idx,1); renderPreviews(); });
-      });
+      previewGrid.querySelectorAll('.remove-btn').forEach(b => b.addEventListener('click', e => { e.preventDefault(); selectedFiles.splice(+b.dataset.i,1); renderPreviews(); }));
       fileCount.style.display = selectedFiles.length ? 'block' : 'none';
       fileCount.textContent = `${selectedFiles.length} foto selezionat${selectedFiles.length===1?'a':'e'}`;
-      btnUpload.disabled = selectedFiles.length === 0;
-      hideMessages();
+      btnUpload.disabled = !selectedFiles.length;
+      hideMsg();
     }
-    function hideMessages() { msgSuccess.style.display='none'; msgError.style.display='none'; }
-    function showError(msg) { msgError.textContent=msg; msgError.style.display='block'; msgSuccess.style.display='none'; }
-    function toBase64(file) {
-      return new Promise((res,rej) => { const r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.onerror=rej; r.readAsDataURL(file); });
-    }
-    function setProgress(i, total) {
-      const pct = Math.round((i/total)*100);
-      progressFill.style.width = pct+'%';
-      progressPct.textContent = pct+'%';
-      progressText.textContent = i<total ? `Foto ${i+1} di ${total}…` : 'Completato!';
-    }
+    function hideMsg() { msgSuccess.style.display='none'; msgError.style.display='none'; }
+    function showError(m) { msgError.textContent=m; msgError.style.display='block'; msgSuccess.style.display='none'; }
+    function toB64(f) { return new Promise((r,j) => { const rd=new FileReader(); rd.onload=()=>r(rd.result.split(',')[1]); rd.onerror=j; rd.readAsDataURL(f); }); }
+
     btnUpload.addEventListener('click', async () => {
       if (!selectedFiles.length) return;
       const nome = nomeInput.value.trim() || 'Ospite';
-      btnUpload.disabled = true;
-      progressWrap.style.display = 'block';
-      hideMessages();
-      const total = selectedFiles.length;
-      let uploaded = 0, errors = 0;
+      btnUpload.disabled = true; progressWrap.style.display='block'; hideMsg();
+      const total = selectedFiles.length; let up=0, err=0;
       for (let i=0; i<total; i++) {
-        setProgress(i, total);
+        const pct = Math.round((i/total)*100);
+        progressFill.style.width=pct+'%'; progressPct.textContent=pct+'%';
+        progressText.textContent=`Foto ${i+1} di ${total}…`;
         try {
-          const base64 = await toBase64(selectedFiles[i]);
-          const res = await fetch(SCRIPT_URL, { method:'POST', mode:'cors', headers:{'Content-Type':'text/plain'}, body:JSON.stringify({tipo:'foto', nome, file:base64, fileName:selectedFiles[i].name, mimeType:selectedFiles[i].type}) });
-          const json = await res.json();
-          json.success ? uploaded++ : errors++;
-        } catch { errors++; }
+          const b64 = await toB64(selectedFiles[i]);
+          const res = await fetch(SCRIPT_URL, { method:'POST', mode:'cors', headers:{'Content-Type':'text/plain'}, body:JSON.stringify({tipo:'foto', nome, file:b64, fileName:selectedFiles[i].name, mimeType:selectedFiles[i].type}) });
+          const j = await res.json(); j.success ? up++ : err++;
+        } catch { err++; }
       }
-      setProgress(total, total);
-      setTimeout(() => { progressWrap.style.display='none'; }, 600);
-      if (uploaded>0 && errors===0) {
-        msgSuccess.innerHTML = `<strong>Grazie mille, ${nome}! 💚</strong><br>${uploaded} foto caricate con successo.`;
-        msgSuccess.style.display = 'block';
-        selectedFiles = []; renderPreviews();
-      } else if (uploaded>0) {
-        msgSuccess.innerHTML = `<strong>${uploaded} foto caricate</strong> — ${errors} non riuscite.`;
-        msgSuccess.style.display = 'block';
+      progressFill.style.width='100%'; progressPct.textContent='100%';
+      setTimeout(()=>{ progressWrap.style.display='none'; },600);
+      if (up>0 && err===0) {
+        msgSuccess.innerHTML=`<strong>Grazie, ${nome}! 💚</strong><br>${up} foto caricate. Aggiorno la galleria…`;
+        msgSuccess.style.display='block';
+        selectedFiles=[]; renderPreviews();
+        setTimeout(loadGallery, 2000);
+      } else if (up>0) {
+        msgSuccess.innerHTML=`<strong>${up} caricate</strong>, ${err} non riuscite.`;
+        msgSuccess.style.display='block';
       } else {
-        showError('Errore di connessione. Riprova tra qualche istante.');
-        btnUpload.disabled = false;
+        showError('Errore di connessione. Riprova.'); btnUpload.disabled=false;
       }
     });
+
+    // ── GALLERIA DRIVE ──
+    const photoGrid    = document.getElementById('photo-grid');
+    const galleryLoad  = document.getElementById('gallery-loading');
+    const galleryEmpty = document.getElementById('gallery-empty');
+    const lightbox     = document.getElementById('lightbox');
+    const lbImg        = document.getElementById('lb-img');
+
+    document.getElementById('lb-close').addEventListener('click', () => { lightbox.classList.remove('open'); lbImg.src=''; });
+    lightbox.addEventListener('click', e => { if (e.target===lightbox) { lightbox.classList.remove('open'); lbImg.src=''; } });
+
+    async function loadGallery() {
+      galleryLoad.style.display='block';
+      galleryEmpty.style.display='none';
+      photoGrid.innerHTML='';
+      try {
+        // Usa l'API pubblica Drive con chiave — lista file della cartella pubblica
+        const url = `https://www.googleapis.com/drive/v3/files?q=%271H5bPRkI2WpKmc-v9RNQnORn-FZfeh3qu%27+in+parents+and+mimeType+contains+%27image%2F%27+and+trashed%3Dfalse&fields=files(id%2Cname)&orderBy=createdTime+desc&pageSize=100&key=AIzaSyD_PLACEHOLDER`;
+
+        // Poiché non possiamo usare una API key qui, usiamo il link diretto Drive
+        // La cartella è pubblica quindi possiamo costruire i thumbnail direttamente
+        // Usiamo lo script Apps Script come proxy per listare i file
+        const res = await fetch(SCRIPT_URL + '?tipo=listafoto', { mode:'cors' });
+        const data = await res.json();
+
+        galleryLoad.style.display='none';
+        if (!data.files || data.files.length === 0) {
+          galleryEmpty.style.display='block'; return;
+        }
+        data.files.forEach(f => {
+          const item = document.createElement('div');
+          item.className='photo-item';
+          // thumbnail Drive pubblico
+          const thumb = `https://drive.google.com/thumbnail?id=${f.id}&sz=w300`;
+          const full  = `https://drive.google.com/uc?export=view&id=${f.id}`;
+          item.innerHTML=`<img src="${thumb}" alt="${f.name}" loading="lazy"/>`;
+          item.addEventListener('click', () => { lbImg.src=full; lightbox.classList.add('open'); });
+          photoGrid.appendChild(item);
+        });
+      } catch(e) {
+        galleryLoad.style.display='none';
+        galleryEmpty.style.display='block';
+        galleryEmpty.textContent='Nessuna foto ancora. Sii il primo!';
+      }
+    }
+    loadGallery();
   </script>
 </body>
 </html>
