@@ -6,79 +6,105 @@
   <title>Il Menù — Rocco & Rossella</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .menu-illus-wrap {
-      width: 100%; background: #fff;
-      display: flex; justify-content: center; align-items: flex-end;
-      padding: 28px 24px 0; position: relative; overflow: hidden;
+    /* ── HERO IMMAGINE ── */
+    .menu-hero {
+      width: 100%;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 28px 24px 0;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 3px solid var(--green);
     }
-    .menu-illus-wrap img.illus { max-width: 260px; width: 60%; object-fit: contain; display: block; position: relative; z-index: 1; }
-    .menu-illus-wrap .nv-l { position: absolute; left: -10px; bottom: 12px; width: 90px; opacity: 0.45; transform: scaleX(-1); }
-    .menu-illus-wrap .nv-r { position: absolute; right: -10px; top: 12px; width: 90px; opacity: 0.45; }
+    .menu-hero img.illus {
+      max-width: 240px;
+      width: 55%;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    .menu-hero .nv-l { position:absolute; left:-10px; bottom:10px; width:80px; opacity:0.4; transform:scaleX(-1); }
+    .menu-hero .nv-r { position:absolute; right:-10px; top:10px;  width:80px; opacity:0.4; }
 
+    /* ── HEADER TESTO ── */
     .menu-header {
-      width: 100%; background: #fff; text-align: center;
-      padding: 18px 24px 24px; border-bottom: 3px solid var(--green);
+      width: 100%;
+      background: #fff;
+      text-align: center;
+      padding: 20px 24px 24px;
+      border-bottom: 3px solid var(--green);
     }
 
-    .menu-body { max-width: 640px; margin: 0 auto; }
+    /* ── CORPO MENU ── */
+    .menu-wrap { max-width: 580px; margin: 0 auto; }
 
-    /* ── LOCATION ── */
-    .location-block { margin-bottom: 44px; }
-    .location-title {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 18px;
+    /* Separatore location */
+    .location-sep {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 32px 0 20px;
     }
-    .location-title::before,
-    .location-title::after { content: ''; flex: 1; height: 1.5px; background: var(--border); }
-    .location-name {
+    .location-sep::before,
+    .location-sep::after { content:''; flex:1; height:1.5px; background:var(--border); }
+    .location-sep span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--green);
+      white-space: nowrap;
+    }
+
+    /* Voce di menu — una sola dimensione per tutto */
+    .voce {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .voce:last-child { border-bottom: none; }
+    .voce-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      margin-top: 6px;
+      opacity: 0.7;
+    }
+    .voce-body { flex: 1; }
+    .voce-nome {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem; font-weight: 600;
-      color: var(--green); white-space: nowrap;
-      letter-spacing: 0.5px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--dark);
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+    .voce-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
     }
 
-    /* ── PORTATA ── */
-    .portata { margin-bottom: 18px; }
-    .portata-label {
-      font-size: 9px; font-weight: 700; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--muted);
-      margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
-    }
-    .portata-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-    .portata-item {
-      background: var(--white); border: 1px solid var(--border);
-      border-left: 4px solid var(--green);
-      border-radius: 0 12px 12px 0;
-      padding: 12px 16px; margin-bottom: 7px;
-    }
-    .portata-nome {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem; font-weight: 600; color: var(--dark); margin-bottom: 2px;
-    }
-    .portata-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
-
-    /* Sotto-voci (bullet) */
-    .sub-item {
-      background: var(--cream); border: 1px solid var(--border);
-      border-left: 3px solid var(--border-2);
-      border-radius: 0 10px 10px 0;
-      padding: 9px 14px; margin-bottom: 5px; margin-left: 12px;
-    }
-    .sub-nome { font-size: 13px; color: var(--dark); line-height: 1.4; }
-
-    /* Note speciali (sorbetto, bar, ecc.) */
-    .nota-item {
-      background: var(--green-light);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 9px 14px; margin-bottom: 7px;
-      font-size: 13px; color: var(--green-dark);
-      font-weight: 700; text-align: center; letter-spacing: 0.5px;
+    /* Nota speciale (sorbetto, bar) */
+    .voce-nota {
+      text-align: center;
+      padding: 10px 0;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green);
+      border-bottom: 1px solid var(--border);
     }
   </style>
 </head>
 <body>
+
   <nav>
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
@@ -95,126 +121,149 @@
     </div>
   </nav>
 
-  <div class="menu-illus-wrap">
+  <!-- ILLUSTRAZIONE -->
+  <div class="menu-hero">
     <img src="nuvola.png" class="nv-l" alt="" />
-    <img src="menu.png" class="illus" alt="Rocco e Rossella" />
+    <img src="menu.PNG" class="illus" alt="Rocco e Rossella" />
     <img src="nuvola.png" class="nv-r" alt="" />
   </div>
 
+  <!-- TITOLO -->
   <div class="menu-header">
-    <p style="font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--green); margin-bottom:6px;">Le Nozze di Rocco e Rossella · 24/06/2026</p>
-    <div style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,5vw,2.6rem); color:var(--dark); font-style:italic;">Il Menù</div>
-    <div style="width:40px; height:2px; background:var(--green); margin:10px auto 0; border-radius:2px; opacity:0.5;"></div>
+    <p style="font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--green);margin-bottom:6px;">Le Nozze di Rocco e Rossella · 24/06/2026</p>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,5vw,2.4rem);color:var(--dark);font-style:italic;">Il Menù</div>
+    <div style="width:36px;height:2px;background:var(--green);margin:10px auto 0;border-radius:2px;opacity:0.5;"></div>
   </div>
 
   <div class="page-body">
-    <div class="menu-body">
-
-      <div class="nuvola-sep" style="margin-bottom:32px;">
-        <img src="nuvola.png" alt="" style="transform:scaleX(-1)" />
-        <img src="nuvola.png" alt="" />
-        <img src="nuvola.png" alt="" style="transform:scaleX(-1)" />
-      </div>
+    <div class="menu-wrap">
 
       <!-- ══ PINETA ══ -->
-      <div class="location-block">
-        <div class="location-title">
-          <span class="location-name">🌲 Pineta — Welcome Bite</span>
-        </div>
+      <div class="location-sep"><span>🌲 Pineta — Welcome Bite</span></div>
 
-        <div class="portata">
-          <p class="portata-label">Benvenuto</p>
-          <div class="portata-item">
-            <p class="portata-nome">Selezione di succhi Bio e bevande analcoliche</p>
-          </div>
-          <div class="sub-item"><p class="sub-nome">Angolo panzerotti baresi fritti al momento — panzerotti farciti e preparati come da tradizione barese</p></div>
-          <div class="sub-item"><p class="sub-nome">Zeppolina di baccalà con salsa di peperone dolce</p></div>
-          <div class="sub-item"><p class="sub-nome">Caciocavallo podolico piastrato su crostino di pane di Altamura</p></div>
-          <div class="sub-item"><p class="sub-nome">Focaccia pugliese</p></div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Selezione di succhi Bio e bevande analcoliche</p>
+        </div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Angolo panzerotti baresi fritti al momento</p>
+          <p class="voce-desc">Panzerotti farciti e preparati come da tradizione barese</p>
+        </div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Zeppolina di baccalà</p>
+          <p class="voce-desc">Con salsa di peperone dolce</p>
+        </div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Caciocavallo podolico piastrato</p>
+          <p class="voce-desc">Su crostino di pane di Altamura</p>
+        </div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Focaccia pugliese</p>
         </div>
       </div>
 
       <!-- ══ GIARDINO BOTANICO ══ -->
-      <div class="location-block">
-        <div class="location-title">
-          <span class="location-name">🌿 Giardino Botanico</span>
-        </div>
-        <p style="font-size:12px; color:var(--muted); text-align:center; margin-bottom:14px; font-style:italic;">Servito a tavola</p>
+      <div class="location-sep"><span>🌿 Giardino Botanico</span></div>
+      <p style="font-size:11px;color:var(--muted);text-align:center;font-style:italic;margin-bottom:14px;">Servito a tavola</p>
 
-        <div class="portata">
-          <p class="portata-label">Mare</p>
-          <div class="sub-item"><p class="sub-nome">Carpacci di mare — Salmone, Tonno rosso, Pesce spada</p></div>
-          <div class="sub-item"><p class="sub-nome">Frittura di calamari e gamberi</p></div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Carpacci di mare</p>
+          <p class="voce-desc">Salmone, tonno rosso, pesce spada</p>
         </div>
-
-        <div class="portata">
-          <p class="portata-label">Angolo del Casaro</p>
-          <div class="portata-item">
-            <p class="portata-desc">Selezione di formaggi tipici del territorio</p>
-          </div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Frittura di calamari e gamberi</p>
         </div>
-
-        <div class="portata">
-          <p class="portata-label">Pane & Taralli</p>
-          <div class="portata-item">
-            <p class="portata-nome">Selezione di pane e taralli</p>
-          </div>
-          <div class="sub-item"><p class="sub-nome">Girello di vitellino con spuma di cipolla rossa caramellata, capocollo di Martina Franca, ricottina con riduzione di vincotto, bombetta di cisternino</p></div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Angolo del casaro</p>
+          <p class="voce-desc">Selezione di formaggi tipici del territorio</p>
+        </div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Selezione di pane e taralli</p>
+        </div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Girello di vitellino</p>
+          <p class="voce-desc">Con spuma di cipolla rossa caramellata, capocollo di Martina Franca, ricottina con riduzione di vincotto, bombetta di cisternino</p>
         </div>
       </div>
 
       <!-- ══ SALA DEGLI AGRUMI ══ -->
-      <div class="location-block">
-        <div class="location-title">
-          <span class="location-name">🍋 Sala degli Agrumi</span>
-        </div>
+      <div class="location-sep"><span>🍋 Sala degli Agrumi</span></div>
 
-        <div class="portata">
-          <p class="portata-label">Antipasto</p>
-          <div class="portata-item">
-            <p class="portata-nome">Frutti di Mare</p>
-            <p class="portata-desc">Ricciolo di calamaro scottato, coda di gambero, gambero pochè con cannolo croccante di gambero e mela verde</p>
-          </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Antipasto — Frutti di mare</p>
+          <p class="voce-desc">Ricciolo di calamaro scottato, coda di gambero, gambero pochè con cannolo croccante di gambero e mela verde</p>
         </div>
-
-        <div class="portata">
-          <p class="portata-label">Primo</p>
-          <div class="portata-item">
-            <p class="portata-nome">Risotto mantecato</p>
-            <p class="portata-desc">Con datterino giallo, pescatrice, vongole e aglio nero</p>
-          </div>
-          <div class="portata-item">
-            <p class="portata-nome">Lingotto in farcia di brasciola molfettese</p>
-            <p class="portata-desc">Il suo ristretto, fonduta al pecorino e olio verde</p>
-          </div>
-        </div>
-
-        <div class="portata">
-          <p class="portata-label">Secondo</p>
-          <div class="portata-item">
-            <p class="portata-nome">Ombrina scottata</p>
-            <p class="portata-desc">Con foglia di pane d'Altamura, julienne di seppia, sedano e olive, brodetto di pesce</p>
-          </div>
-        </div>
-
-        <div class="nota-item">🍋 Sorbetto al limone</div>
-        <div class="nota-item">🍹 American Bar</div>
       </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Primo — Risotto mantecato</p>
+          <p class="voce-desc">Con datterino giallo, pescatrice, vongole e aglio nero</p>
+        </div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Primo — Lingotto in farcia di brasciola molfettese</p>
+          <p class="voce-desc">Il suo ristretto, fonduta al pecorino e olio verde</p>
+        </div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Secondo — Ombrina scottata</p>
+          <p class="voce-desc">Con foglia di pane d'Altamura, julienne di seppia, sedano e olive, brodetto di pesce</p>
+        </div>
+      </div>
+      <div class="voce-nota">🍋 Sorbetto al limone</div>
+      <div class="voce-nota">🍹 American Bar</div>
 
       <!-- ══ IN MASSERIA ══ -->
-      <div class="location-block">
-        <div class="location-title">
-          <span class="location-name">🏡 In Masseria</span>
-        </div>
+      <div class="location-sep"><span>🏡 In Masseria</span></div>
 
-        <div class="portata">
-          <p class="portata-label">Dolci & Frutta</p>
-          <div class="sub-item"><p class="sub-nome">Buffet di frutta e dolci</p></div>
-          <div class="sub-item"><p class="sub-nome">Gelato mantecato con frutta di stagione</p></div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Buffet di frutta e dolci</p>
+        </div>
+      </div>
+      <div class="voce">
+        <div class="voce-dot"></div>
+        <div class="voce-body">
+          <p class="voce-nome">Gelato mantecato con frutta di stagione</p>
         </div>
       </div>
 
-      <div class="nuvola-sep">
+      <div class="nuvola-sep" style="margin-top:36px;">
         <img src="nuvola.png" alt="" style="transform:scaleX(-1)" />
         <img src="nuvola.png" alt="" />
         <img src="nuvola.png" alt="" style="transform:scaleX(-1)" />
@@ -227,5 +276,6 @@
     <img src="nuvola.png" alt="" />
     Rocco &amp; Rossella ❤️☀️ · 24 Giugno 2026 · Barletta
   </footer>
+
 </body>
 </html>
