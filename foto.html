@@ -242,9 +242,13 @@
           item.className='photo-item';
           // thumbnail Drive pubblico
           const thumb = `https://drive.google.com/thumbnail?id=${f.id}&sz=w300`;
-          const full  = `https://drive.google.com/uc?export=view&id=${f.id}`;
+          const full  = `https://drive.google.com/thumbnail?id=${f.id}&sz=w1600`;
           item.innerHTML=`<img src="${thumb}" alt="${f.name}" loading="lazy"/>`;
-          item.addEventListener('click', () => { lbImg.src=full; lightbox.classList.add('open'); });
+          item.addEventListener('click', () => {
+            lbImg.onerror = () => { lbImg.onerror = null; lbImg.src = thumb; };
+            lbImg.src = full;
+            lightbox.classList.add('open');
+          });
           photoGrid.appendChild(item);
         });
       } catch(e) {
